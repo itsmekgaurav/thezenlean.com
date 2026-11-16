@@ -132,7 +132,7 @@ export default function Home() {
         <nav>
           <a href="https://www.zenproducts.ai/apps/zen-leantracker/privacy">Privacy</a>
           <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms</a>
-          <a href="mailto:hello@zenproducts.ai">hello@zenproducts.ai</a>
+          <a href="mailto:hello@thezenlean.com">hello@thezenlean.com</a>
         </nav>
         <p className="copy">© 2026 Zen Products · Breakfast photo by Ella Olsson, CC BY 2.0</p>
       </footer>
