@@ -62,7 +62,8 @@ main, .nav, .foot { position: relative; z-index: 1; }
 
 /* ---------- Rings ---------- */
 .ring { position: relative; flex: none; }
-.ring svg { transform: rotate(-90deg); display: block; }
+/* overflow visible: the glow on .ring-fill reaches past the 104-unit viewBox and was cut into a square at its edge. */
+.ring svg { transform: rotate(-90deg); display: block; overflow: visible; }
 .ring-track { fill: none; stroke: rgba(255,255,255,0.1); }
 .ring-fill { fill: none; stroke-linecap: round; filter: drop-shadow(0 0 6px currentColor); }
 .ring-label { position: absolute; inset: 0; display: grid; place-items: center; font-weight: 800; font-size: 18px; }
