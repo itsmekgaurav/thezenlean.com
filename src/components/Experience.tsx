@@ -153,7 +153,7 @@ export function Experience({ children }: { children: React.ReactNode }) {
       gsap.to(c, { rotateY: x * 8, rotateX: -y * 8, duration: 0.5, ease: "power2.out" });
       c.style.setProperty("--gx", `${(x + 0.5) * 100}%`); c.style.setProperty("--gy", `${(y + 0.5) * 100}%`);
     };
-    const onLeave = (e: PointerEvent) => gsap.to(e.currentTarget as HTMLElement, { rotateY: 0, rotateX: 0, duration: 0.8, ease: "elastic.out(1, 0.5)" });
+    const onLeave = (e: PointerEvent) => gsap.to(e.currentTarget as HTMLElement, { rotateY: 0, rotateX: 0, duration: 0.9, ease: "power3.out" });
     tilts.forEach((t) => { t.addEventListener("pointermove", onMove); t.addEventListener("pointerleave", onLeave); });
 
     return () => {
