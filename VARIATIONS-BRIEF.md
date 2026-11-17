@@ -1,5 +1,43 @@
 # Homepage variations brief (17 Nov 2026)
 
+> Round 2. Round 1's A (an editorial newspaper) and C (a lab notebook) were rejected and deleted:
+> "Don't make design for the sake of making design. Think about the product and then make the
+> design." A newspaper or a lab manual has nothing to do with how this product feels. B (the app's
+> own sky, one day) stays. Every new variation must come out of the product brief below. If a
+> design choice cannot be traced to a line in it, it does not belong.
+
+## The product brief (read this first; it decides everything)
+
+**The problem it solves.** Health tracking feels like work and judgement.
+- Calorie counters are spreadsheets: endless logging, red numbers, a verdict. A 2025 UCL and
+  Loughborough study of 58,881 posts about fitness and calorie apps found shame, disappointment and
+  demotivation, frustration at the effort of logging, and app goals not grounded in health guidance
+  (one user was told to eat "-700 calories a day").
+- The data is scattered: a food app, a fasting timer and a wearable subscription that never talk.
+- The numbers have no meaning: an HRV of 52 tells you nothing unless something tells you what it means
+  for you, today.
+
+**Who it is for.** People who tried calorie counting and quit because it felt like data entry and
+guilt; Apple Watch owners curious about sleep and recovery who do not want a second device or
+subscription; people who already fast; people who care about privacy. Often looking first thing in
+the morning, often on a rough day.
+
+**The emotion.** Calm. Relief. Being understood without being judged. Kind, but honest: warmth is
+in the phrasing, never in inflating a score. ("Rough nights happen. Be kind to yourself today" is
+right. A green ring that was not earned is not.) Quiet by default, loud only when earned.
+
+**The message.** Every morning Zen Lean answers one question: how am I today, and what should I do
+about it? One calm picture of food, fasting, sleep and movement, and Kai, a coach who has actually
+read your data and tells you the truth kindly. No guilt, no cheerleading, no spreadsheet.
+
+**The identity, which belongs to the app and is not ours to reinvent.** Dark, because the app's
+signature is a time-of-day sky behind everything (night, morning, afternoon, evening; the four images
+in /sky). The icon is a sunrise over water. SF Pro Rounded (ui-rounded, Nunito fallback). Seven
+signal hues, each owned by one signal. The warm sunrise gradient is reserved for the one action.
+Variation B (`src/app/v/b/`) already implements this palette, the CSS device frame and the type;
+read it and reuse its tokens so every variation is unmistakably the same product.
+
+
 The owner rejected the current homepage: "feels empty, no multiple pages, no content strategy, no SEO."
 We are building 2-3 homepage variations, each a complete, dense, real page, to choose from.
 Only the HOME page now. Other pages come after a choice, but every variation must show the
@@ -8,7 +46,7 @@ multi-page site in its navigation and footer (links may point at routes that do 
 ## Where to build
 
 - Next.js 16 App Router, React 19, repo root = this folder. Branch `homepage-variations`.
-- Variation X lives ONLY in `src/app/v/<x>/` (page.tsx, any components, one CSS module or a scoped
+- Variation X lives ONLY in `src/app/v/<x>/` (b is the kept one; do not edit it) (page.tsx, any components, one CSS module or a scoped
   CSS file). Do not edit `src/app/globals.css`, `layout.tsx`, `page.tsx` or other variations.
 - Each page exports `metadata` with `robots: { index: false }` (these are previews).
 - The root layout loads `globals.css` which sets `html{background:#0b1533}` and a dark body
