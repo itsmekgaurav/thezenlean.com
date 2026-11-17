@@ -43,15 +43,15 @@
 .arc {
   fill: none; stroke-width: 6; stroke-linecap: round;
   stroke-dasharray: 100px; stroke-dashoffset: calc((100 - var(--v)) * 1px);
-  transform: rotate(-90deg); transform-origin: 50% 50%; transform-box: fill-box;
-  transition: stroke-dashoffset 1.6s var(--e) 0.15s;
+  transform: rotate(var(--start, -90deg)); transform-origin: 50% 50%; transform-box: fill-box;
+  transition: stroke-dashoffset 1.6s var(--e) 0.15s, stroke-opacity 0.2s linear 0.15s;
 }
 .track, .trackDark, .trackPink, .trackCyan, .trackViolet { fill: none; stroke-width: 6; }
 .track { stroke: rgba(255, 255, 255, 0.08); }
 .trackDark { stroke: #0a1520; }
 .rise, .slide { transition: opacity 0.7s var(--e), transform 0.7s var(--e); transition-delay: calc(0.12s + var(--i, 0) * 0.1s); }
 
-.w[data-arm]:not([data-on]) .arc { stroke-dashoffset: 100px; }
+.w[data-arm]:not([data-on]) .arc { stroke-dashoffset: 100px; stroke-opacity: 0; }
 .w[data-arm]:not([data-on]) .rise { opacity: 0; transform: translateY(10px); }
 .w[data-arm]:not([data-on]) .slide { opacity: 0; transform: translateX(-16px); }
 
@@ -62,8 +62,8 @@
 .fastLine b { color: var(--ink); font-weight: 700; }
 .segs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.3em; margin-top: 0.35em; }
 .segs span { height: 0.42em; border-radius: 99px; background: #3b3552; overflow: hidden; }
-.segs i { display: block; height: 100%; width: calc(var(--v) * 100%); border-radius: 99px; background: #ec3a52; transform-origin: 0 50%; transition: transform 0.55s var(--e); transition-delay: calc(0.2s + var(--i) * 0.18s); }
-.w[data-arm]:not([data-on]) .segs i { transform: scaleX(0); }
+.segs i { display: block; height: 100%; width: calc(var(--v) * 100%); border-radius: 99px; background: #ec3a52; transform-origin: 0 50%; transition: transform 0.55s var(--e), opacity 0.1s linear; transition-delay: calc(0.2s + var(--i) * 0.18s); }
+.w[data-arm]:not([data-on]) .segs i { transform: scaleX(0); opacity: 0; }
 .segLabels { display: flex; justify-content: space-between; font-size: 0.78em; color: var(--dim); }
 
 .stageCard { background: linear-gradient(165deg, #34302a, #2a2a2d 70%); }
@@ -87,7 +87,8 @@
 .histDay b { font-size: 1.45em; color: #4cd964; line-height: 1.1; }
 .histMain { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .histMain b { font-size: 1.15em; font-weight: 700; }
-.histMain small { font-size: 0.8em; color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.histMain small { font-size: 0.8em; color: var(--soft); white-space: nowrap; }
+@media (max-width: 420px) { .histMain small { font-size: 0.74em; } .badge { padding: 0.3em 0.5em; } .hist li { gap: 0.6em; } }
 .badge { flex: none; display: inline-flex; align-items: center; gap: 0.4em; font-size: 0.82em; font-weight: 600; padding: 0.3em 0.65em; border-radius: 99px; background: rgba(255, 255, 255, 0.07); align-self: flex-start; }
 .badge svg { width: 1.05em; height: 1.05em; }
 
@@ -144,8 +145,8 @@
 .dialFace { fill: #1f2329; stroke: #181b20; stroke-width: 5; }
 .ticks line { stroke: rgba(255, 255, 255, 0.35); stroke-width: 0.8; }
 .usual { fill: none; stroke: rgba(255, 255, 255, 0.45); stroke-width: 1.2; stroke-dasharray: 1.6 2.4; }
-.night { fill: none; stroke: #5ab8ff; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 100px; stroke-dashoffset: 0; transition: stroke-dashoffset 1.6s var(--e) 0.2s; }
-.w[data-arm]:not([data-on]) .night { stroke-dashoffset: 100px; }
+.night { fill: none; stroke: #5ab8ff; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 100px; stroke-dashoffset: 0; transition: stroke-dashoffset 1.6s var(--e) 0.2s, stroke-opacity 0.2s linear 0.2s; }
+.w[data-arm]:not([data-on]) .night { stroke-dashoffset: 100px; stroke-opacity: 0; }
 .dialN { font-size: 7px; fill: rgba(255, 255, 255, 0.7); text-anchor: middle; font-family: inherit; }
 .dialT { font-size: 6.6px; font-weight: 600; fill: #fff; text-anchor: middle; font-family: inherit; }
 .dialMoon { fill: none; stroke: #a99af0; stroke-width: 1.1; }
@@ -199,13 +200,13 @@
 .fitIcon svg { width: 1.5em; height: 1.5em; }
 .fitNum { flex: none; font-size: 2.6em; font-weight: 800; color: #4ade80; line-height: 1; letter-spacing: -0.02em; }
 .fitNum small { font-size: 0.38em; font-weight: 600; color: var(--soft); margin-left: 0.1em; }
-.fitChart { width: 100%; height: 4.6em; overflow: visible; }
-.ageLine { stroke: rgba(255, 255, 255, 0.3); stroke-width: 1; stroke-dasharray: 3 3; vector-effect: non-scaling-stroke; }
+.fitChart { width: 100%; height: auto; overflow: visible; }
+.ageLine { stroke: rgba(255, 255, 255, 0.3); stroke-width: 0.8; stroke-dasharray: 3 3; }
 .fitArea { fill: rgba(74, 222, 128, 0.18); transition: opacity 0.8s var(--e) 1.1s; }
-.fitLine { fill: none; stroke: #4ade80; stroke-width: 2.4; stroke-linecap: round; vector-effect: non-scaling-stroke; stroke-dasharray: 100px; stroke-dashoffset: 0; transition: stroke-dashoffset 1.6s cubic-bezier(0.45, 0, 0.25, 1) 0.2s; }
+.fitLine { fill: none; stroke: #4ade80; stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 100px; stroke-dashoffset: 0; transition: stroke-dashoffset 1.6s cubic-bezier(0.45, 0, 0.25, 1) 0.2s, stroke-opacity 0.2s linear 0.2s; }
 .fitDot { fill: #4ade80; transition: opacity 0.3s; transition-delay: calc(0.25s + var(--i) * 0.16s); }
 .fitEnd { fill: #4ade80; stroke: #1a263f; stroke-width: 1.5; transition: opacity 0.4s 1.7s; }
-.w[data-arm]:not([data-on]) .fitLine { stroke-dashoffset: 100px; }
+.w[data-arm]:not([data-on]) .fitLine { stroke-dashoffset: 100px; stroke-opacity: 0; }
 .w[data-arm]:not([data-on]) :is(.fitArea, .fitDot, .fitEnd) { opacity: 0; }
 .w[data-on] .fitEnd { animation: ping 1.6s var(--e) 1.9s 1; transform-origin: center; transform-box: fill-box; }
 @keyframes ping { 0% { transform: scale(1); } 40% { transform: scale(1.7); } 100% { transform: scale(1); } }
@@ -233,8 +234,8 @@
 .hourRow p { display: flex; justify-content: space-between; font-size: 0.92em; color: var(--soft); }
 .hourRow p b { font-weight: 700; }
 .hourBars { position: relative; height: 1.9em; margin-top: 0.2em; }
-.hourBars i { position: absolute; bottom: 0; width: calc(100% / 24 - 2px); border-radius: 3px; transform-origin: 50% 100%; transition: transform 0.6s var(--e); transition-delay: calc(0.15s + var(--i) * 0.06s); }
-.w[data-arm]:not([data-on]) .hourBars i { transform: scaleY(0); }
+.hourBars i { position: absolute; bottom: 0; width: calc(100% / 24 - 2px); border-radius: 3px; transform-origin: 50% 100%; transition: transform 0.6s var(--e), opacity 0.15s linear; transition-delay: calc(0.15s + var(--i) * 0.06s); }
+.w[data-arm]:not([data-on]) .hourBars i { transform: scaleY(0); opacity: 0; }
 .hourAxis { display: flex; justify-content: space-between; font-size: 0.78em; color: var(--dim); padding: 0 0.2em; }
 
 /* Not a screen of its own in the app, so it takes the app's plain dark card, the same surface as the hourly card beside it. */
@@ -262,6 +263,8 @@
 .fitCard .kaiRow { margin-top: -0.6em; background: linear-gradient(90deg, rgba(8, 12, 24, 0.22) 1.5%, rgba(40, 110, 80, 0.3) 1.5%, rgba(40, 110, 80, 0.3) 98.5%, rgba(8, 12, 24, 0.22) 98.5%); }
 
 @media (max-width: 700px) { .hero { font-size: 8.2px; } }
+
+.w[data-setup], .w[data-setup] * { transition: none !important; animation: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
   .w *, .w *::before { transition: none !important; animation: none !important; }

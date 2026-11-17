@@ -79,7 +79,12 @@ export default function Cinema({ rootId }: { rootId: string }) {
     const cards = Array.from(root.querySelectorAll<HTMLElement>("[data-w]"));
     let cardIo: IntersectionObserver | undefined;
     if (cards.length && !reduce.matches) {
+      // Arm without transitions: going to the empty state must be instant, or pieces with long delays
+      // (the last Fitness Age dots, the fifth history row) are still fading out when the card plays.
+      cards.forEach((c) => c.setAttribute("data-setup", ""));
       cards.forEach((c) => c.setAttribute("data-arm", ""));
+      void root.offsetHeight;
+      cards.forEach((c) => c.removeAttribute("data-setup"));
       cardIo = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {

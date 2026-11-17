@@ -228,10 +228,10 @@ export function SleepClock() {
           <g className={w.ticks}>{ticks}</g>
           <path d={arc(-14, 84, 52)} className={w.usual} />
           <path d={arc(-10, 79.25)} pathLength={100} className={w.night} />
-          <text x="60" y="31" className={w.dialN}>0</text>
-          <text x="88" y="63" className={w.dialN}>6</text>
-          <text x="60" y="96" className={w.dialN}>12</text>
-          <text x="32" y="63" className={w.dialN}>18</text>
+          <text x="60" y="37" className={w.dialN}>0</text>
+          <text x="84" y="63" className={w.dialN}>6</text>
+          <text x="60" y="89" className={w.dialN}>12</text>
+          <text x="36" y="63" className={w.dialN}>18</text>
           <path d="M63 47.5a5 5 0 0 1-6.5-6.5 5 5 0 1 0 6.5 6.5Z" className={w.dialMoon} />
           <text x="60" y="62" className={w.dialT}>24-hour</text>
           <text x="60" y="71" className={w.dialT}>rhythm</text>
@@ -283,7 +283,7 @@ export function HeartRange() {
   );
 }
 
-function Ring({ id, value, show, label, from, to, tail }: { id: string; value: number; show: ReactNode; label: string; from: string; to: string; tail?: boolean }) {
+function Ring({ id, value, show, label, from, to, tail, start = 0 }: { id: string; value: number; show: ReactNode; label: string; from: string; to: string; tail?: boolean; start?: number }) {
   return (
     <span className={w.ring}>
       <svg viewBox="0 0 64 64">
@@ -291,7 +291,7 @@ function Ring({ id, value, show, label, from, to, tail }: { id: string; value: n
           <linearGradient id={id} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor={from} /><stop offset="1" stopColor={to} /></linearGradient>
         </defs>
         <circle cx="32" cy="32" r="25" className={w.trackDark} />
-        <circle cx="32" cy="32" r="25" pathLength={100} className={w.arc} stroke={`url(#${id})`} style={v(value)} />
+        <circle cx="32" cy="32" r="25" pathLength={100} className={w.arc} stroke={`url(#${id})`} style={{ ...v(value), "--start": `${start - 90}deg` } as CSSProperties} />
       </svg>
       <b className={tail ? w.dimNum : undefined}>{show}</b>
       <small>{label}</small>
@@ -306,7 +306,7 @@ export function RecoveryRings() {
       <span className={w.info}>{I.info}</span>
       <Ring id="wg-need" value={76} show={<><N to={76} />%</>} label="Sleep Need" from="#5ee0ff" to="#8b8cf6" />
       <Ring id="wg-rec" value={66} show={<N to={66} />} label="Recovery" from="#ffd25a" to="#ff8a2a" />
-      <Ring id="wg-strain" value={14} show="0.0" label="Day Strain" from="#2a3348" to="#a99adf" tail />
+      <Ring id="wg-strain" value={14} show="0.0" label="Day Strain" from="#2a3348" to="#a99adf" tail start={118} />
     </Card>
   );
 }
@@ -328,7 +328,7 @@ export function FitnessAge() {
         </div>
         <span className={w.fitNum}><N to={30} /><small>yr</small></span>
       </div>
-      <svg viewBox="0 0 264 60" className={w.fitChart} preserveAspectRatio="none">
+      <svg viewBox="0 0 264 60" className={w.fitChart}>
         <line x1="0" y1="40" x2="264" y2="40" className={w.ageLine} />
         <path d={`${path} L${end} 60 L${xs[0]} 60 Z`} className={w.fitArea} />
         <path d={path} pathLength={100} className={w.fitLine} />
