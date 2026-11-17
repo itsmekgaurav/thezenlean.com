@@ -4,7 +4,7 @@ import type { CSSProperties } from "react";
 import s from "./f.module.css";
 import Cinema from "./Cinema";
 import { FastCountdown, WIDGETS, type WidgetName } from "./Widgets";
-import { FAQ, FEATURES, GUIDES, KAI_NOTES, OTHER_WAYS, PAIRS, PHOTO_MACROS, PHOTO_STEPS, PROMISES, SMALL_FEATURES, STORE, type Hue, type Usual } from "./data";
+import { FAQ, FEATURES, KAI_NOTES, OTHER_WAYS, PAIRS, PHOTO_MACROS, PHOTO_STEPS, PROMISES, SMALL_FEATURES, STORE, type Hue, type Usual } from "./data";
 
 // Variation F, "Without the guilt", cinematic cut. Same story, copy and claims as E. What changes is the
 // camera. The brief's emotion is relief, so the page is shot as one day: it opens in the app's night
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: "Zen Lean: calorie tracker, fasting, sleep in one app",
   description:
     "A calm calorie tracker for iPhone and Apple Watch. AI photo meals, fasting, sleep and recovery, and Kai, a coach who tells you the truth kindly.",
-  robots: { index: false, follow: false },
+  alternates: { canonical: "/" },
 };
 
 const ROOT_ID = "zen-f";
@@ -184,16 +184,16 @@ export default function VariationF() {
 
       <header className={s.navWrap}>
         <nav className={s.nav} aria-label="Main">
-          <a className={s.brand} href="/v/f">
+          <a className={s.brand} href="/">
             <img src="/icon-512.png" alt="" width={34} height={34} />
             Zen Lean
           </a>
           <ul className={s.navLinks}>
-            <li><a href="/features">Features</a></li>
-            <li><a href="/how-it-works">How it works</a></li>
-            <li><a href="/science">Science</a></li>
-            <li><a href="/guides">Guides</a></li>
-            <li><a href="/support">Support</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#kai">Kai</a></li>
+            <li><a href="#science">Science</a></li>
+            <li><a href="#faq">Questions</a></li>
+            <li><a href="mailto:hello@thezenlean.com">Support</a></li>
           </ul>
           <Store size="sm" />
         </nav>
@@ -591,34 +591,6 @@ export default function VariationF() {
           </div>
         </section>
 
-        {/* ---------- Guides ---------- */}
-        <section id="guides" className={s.guides} aria-labelledby="guides-title">
-          <div className={s.wrap}>
-            <div className={s.head}>
-              <div>
-                <p className={s.kicker}>Guides</p>
-                <h2 id="guides-title" className={s.h2}>Read before you start again.</h2>
-              </div>
-              <a className={s.textLink} href="/guides">All guides &#8594;</a>
-            </div>
-            <ul className={s.guideGrid}>
-              {GUIDES.map((g) => (
-                <li key={g.slug} className={g.featured ? s.guideFeatured : undefined} style={hueVar(g.hue)}>
-                  <a className={s.guide} href={`/guides/${g.slug}`}>
-                    <span className={s.guideTopic}>
-                      <span className={s.dot} aria-hidden="true" />
-                      {g.topic}
-                    </span>
-                    <h3>{g.title}</h3>
-                    <p>{g.dek}</p>
-                    <span className={s.guideMore} aria-hidden="true">Read the guide &#8594;</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
         {/* ---------- FAQ ---------- */}
         <section id="faq" className={s.faq} aria-labelledby="faq-title">
           <div className={`${s.wrap} ${s.faqGrid}`}>
@@ -672,7 +644,7 @@ export default function VariationF() {
         <div className={s.wrap}>
           <div className={s.footGrid}>
             <div className={s.footBrand}>
-              <a className={s.brand} href="/v/f">
+              <a className={s.brand} href="/">
                 <img src="/icon-512.png" alt="" width={34} height={34} />
                 Zen Lean
               </a>
@@ -681,29 +653,28 @@ export default function VariationF() {
             <nav aria-label="Features">
               <h2>Features</h2>
               <ul>
-                <li><a href="/features/food">Food</a></li>
-                <li><a href="/features/fasting">Fasting</a></li>
-                <li><a href="/features/sleep-and-recovery">Sleep and recovery</a></li>
-                <li><a href="/features/activity">Activity</a></li>
-                <li><a href="/features/kai">Kai coach</a></li>
-                <li><a href="/features/apple-watch">Apple Watch</a></li>
+                <li><a href="#photo">Photo meals</a></li>
+                <li><a href="#fasting">Fasting</a></li>
+                <li><a href="#sleep">Sleep</a></li>
+                <li><a href="#recovery">Heart and recovery</a></li>
+                <li><a href="#activity">Activity</a></li>
+                <li><a href="#kai">Kai coach</a></li>
               </ul>
             </nav>
             <nav aria-label="Learn">
               <h2>Learn</h2>
               <ul>
-                <li><a href="/guides">Guides</a></li>
-                <li><a href="/science">Science</a></li>
-                <li><a href="/tools/calorie-calculator">Calorie calculator</a></li>
+                <li><a href="#science">How Zen Lean decides</a></li>
+                <li><a href="#tone">Same day, different words</a></li>
+                <li><a href="#faq">Questions</a></li>
               </ul>
             </nav>
             <nav aria-label="Company">
               <h2>Company</h2>
               <ul>
-                <li><a href="/about">About</a></li>
-                <li><a href="/support">Support</a></li>
-                <li><a href="/privacy">Privacy</a></li>
-                <li><a href="/terms">Terms</a></li>
+                <li><a href="mailto:hello@thezenlean.com">Support</a></li>
+                <li><a href="https://www.zenproducts.ai/apps/zen-leantracker/privacy">Privacy</a></li>
+                <li><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms</a></li>
                 <li><a href="mailto:hello@thezenlean.com">hello@thezenlean.com</a></li>
               </ul>
             </nav>
