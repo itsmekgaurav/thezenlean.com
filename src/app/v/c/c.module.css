@@ -308,8 +308,8 @@
 
 /* Guides */
 .guides { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
-.guides a { display: grid; grid-template-columns: 90px minmax(0, 1fr) 160px 120px 32px; align-items: baseline; gap: 16px; padding: 22px 0; border-bottom: 1px solid var(--rule); text-decoration: none; transition: background 150ms var(--ease), padding 200ms var(--ease); }
-.guides a:hover { background: var(--paper); padding-left: 12px; }
+.guides a { display: grid; grid-template-columns: 90px minmax(0, 1fr) 160px 120px 32px; align-items: baseline; gap: 16px; padding: 22px 0; border-bottom: 1px solid var(--rule); text-decoration: none; transition: background 150ms var(--ease); }
+.guides a:hover { background: var(--paper); }
 .gNo { font-family: var(--mono); font-size: 12px; color: var(--accent); }
 .gTitle { font-size: clamp(20px, 2vw, 26px); font-weight: 550; letter-spacing: -0.02em; line-height: 1.2; }
 .gTopic, .gMin { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-3); }
