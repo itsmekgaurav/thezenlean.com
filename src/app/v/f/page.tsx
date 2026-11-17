@@ -232,19 +232,32 @@ export default function VariationF() {
               </ul>
             </div>
             <div className={s.heroStage}>
-              <div className={s.heroBackRig} data-f="h-back">
-                <div className={s.heroRiseLate}>
-                  <Phone shot="sleep" alt="Zen Lean Sleep card scored 77, Good, after 5h 51m asleep, with the Kai line Some rest is still rest. Go easy on yourself today." className={s.heroBack} />
-                </div>
-              </div>
+              {/* The hero says calorie tracking, so it shows calorie tracking: a real photo meal on the left
+                  (the plate and numbers from the Photo meal film), and the Meals screen it lands on. */}
               <div className={s.heroRig} data-f="h-phone">
                 <div className={s.heroRise}>
-                  <Phone shot="insights" alt="Zen Lean Insights: a 23 of 7 day solid streak, a 14 of 16 hour fast in progress, and Kai's note: You moved well, but calories ran high several days this week. Small portions can close the gap." className={s.heroFront} priority />
+                  <Phone shot="meals" alt="Zen Lean Meals screen: 1,708 kcal left today of a 2,088 budget, with protein, carbs, fat and fibre, water, and the oatmeal bowl with banana logged at 380 kcal." className={s.heroFront} priority />
                 </div>
               </div>
-              <div className={s.heroPull} data-f="h-pull">
-                <div className={s.in7}>
-                  <KaiLine text="You moved well, but calories ran high several days this week. Small portions can close the gap." where="Kai, this week" hue="nutrition" />
+              <div className={s.heroBackRig} data-f="h-back">
+                <div className={s.heroRiseLate}>
+                  <figure className={s.snap}>
+                    <div className={s.snapPhoto}>
+                      <img src="/shots/plate-oatmeal.webp" width={900} height={593} alt="Two wooden bowls of oatmeal topped with sliced banana and cacao nibs, photographed from above." loading="eager" />
+                      <span className={s.snapFrame} aria-hidden="true" />
+                      <span className={s.snapSweep} aria-hidden="true" />
+                    </div>
+                    <figcaption>
+                      <span className={s.snapKicker}><Sparkle />From one photo</span>
+                      <strong className={s.snapName}>Oatmeal bowl with banana and cacao nibs</strong>
+                      <span className={s.snapKcal}>380<small> kcal</small></span>
+                      <span className={s.snapMacros}>
+                        {PHOTO_MACROS.slice(1).map((m) => (
+                          <span key={m.k} style={hueVar(m.hue)}><i aria-hidden="true" />{m.v} g {m.k.toLowerCase()}</span>
+                        ))}
+                      </span>
+                    </figcaption>
+                  </figure>
                 </div>
               </div>
             </div>

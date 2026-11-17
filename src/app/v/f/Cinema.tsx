@@ -127,11 +127,10 @@ export default function Cinema({ rootId }: { rootId: string }) {
             .to(one("h-mist2"), { xPercent: 8, scale: 1.2, opacity: 0.25 }, 0);
           if (desktop) {
             tl.fromTo(one("h-phone"), { rotationX: 16, rotationY: -14, rotation: 2, y: 0 }, { rotationX: 0, rotationY: -4, rotation: 0, y: -46, ease: "power2.out" }, 0)
-              .fromTo(one("h-back"), { y: 0, rotation: 0 }, { y: -18, rotation: 2, ease: "power2.out" }, 0)
-              .to(one("h-pull"), { y: -120, ease: "power1.out" }, 0)
+              .fromTo(one("h-back"), { y: 0, rotation: 0 }, { y: -90, rotation: -2, ease: "power2.out" }, 0)
               .to(one("h-copy"), { y: -36, ease: "power1.in" }, 0.2);
           } else {
-            tl.to(one("h-phone"), { y: -40 }, 0).to(one("h-back"), { y: 10 }, 0).to(one("h-pull"), { y: -70 }, 0);
+            tl.to(one("h-phone"), { y: -40 }, 0).to(one("h-back"), { y: -20 }, 0);
           }
         }
 
