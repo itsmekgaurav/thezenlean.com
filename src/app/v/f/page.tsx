@@ -113,7 +113,7 @@ function Layer({ name, f, eager, children, className }: { name?: string; f: stri
       {name && (
         <img
           src={`/parallax/${name}.webp`}
-          srcSet={`/parallax/${name}-m.webp 853w, /parallax/${name}.webp 1706w`}
+          srcSet={`/parallax/${name}-m.webp 853w, /parallax/${name}.webp 1706w, /parallax/${name}-xl.webp 3412w`}
           sizes="(max-width: 900px) 940px, max(100vw, 112vh)"
           width={1706}
           height={2000}
