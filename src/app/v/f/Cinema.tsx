@@ -51,6 +51,42 @@ export default function Cinema({ rootId }: { rootId: string }) {
       }
     }
 
+    // ---------- Feature reels: each approved film plays only while it is on screen ----------
+    // preload="none" means nothing downloads until a reel is near; with reduced motion the controls
+    // stay and nothing plays by itself.
+    const reels = all("reel") as HTMLVideoElement[];
+    let reelIo: IntersectionObserver | undefined;
+    if (reels.length && !reduce.matches) {
+      reels.forEach((v) => {
+        v.removeAttribute("controls");
+        v.muted = true;
+      });
+      reelIo = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            const v = e.target as HTMLVideoElement;
+            if (e.isIntersecting) v.play().catch(() => v.setAttribute("controls", ""));
+            else v.pause();
+          });
+        },
+        { threshold: 0.35 },
+      );
+      reels.forEach((v) => reelIo!.observe(v));
+    }
+
+    // ---------- Feature chips: the one for the chapter you are reading is lit ----------
+    const chips = all("chip");
+    const setChip = (id: string) => chips.forEach((c) => c.setAttribute("aria-current", String(c.getAttribute("href") === `#${id}`)));
+    let chipIo: IntersectionObserver | undefined;
+    if (chips.length) {
+      const targets = chips.map((c) => document.getElementById((c.getAttribute("href") ?? "").slice(1))).filter(Boolean) as HTMLElement[];
+      chipIo = new IntersectionObserver(
+        (entries) => entries.forEach((e) => e.isIntersecting && setChip(e.target.id)),
+        { rootMargin: "-45% 0px -50% 0px" },
+      );
+      targets.forEach((t) => chipIo!.observe(t));
+    }
+
     const mm = gsap.matchMedia();
     mm.add(
       {
@@ -62,7 +98,8 @@ export default function Cinema({ rootId }: { rootId: string }) {
         root.dataset.motion = desktop ? "full" : "lite";
 
         // Smooth scroll, driven by GSAP's ticker so ScrollTrigger and Lenis share one clock.
-        const lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
+        // anchors: the feature chips glide to their chapter, landing below the nav and the chip bar.
+        const lenis = new Lenis({ lerp: 0.085, smoothWheel: true, anchors: { offset: -112 } });
         lenis.on("scroll", ScrollTrigger.update);
         const raf = (t: number) => lenis.raf(t * 1000);
         gsap.ticker.add(raf);
@@ -169,6 +206,15 @@ export default function Cinema({ rootId }: { rootId: string }) {
           }
         }
 
+        // ---------- 3b. Feature chapters: the reel drifts against the text, the sky drifts slowest ----------
+        all("chapter").forEach((ch) => {
+          const st = { trigger: ch, start: "top bottom", end: "bottom top", scrub: 0.6 };
+          const reel = ch.querySelector('[data-f="ch-reel"]');
+          const sky = ch.firstElementChild;
+          if (reel) gsap.fromTo(reel, { y: desktop ? 90 : 40 }, { y: desktop ? -90 : -40, ease: "none", scrollTrigger: st });
+          if (sky) gsap.fromTo(sky, { yPercent: -5 }, { yPercent: 5, ease: "none", scrollTrigger: { ...st } });
+        });
+
         // ---------- 4. The rules: numbers count up, real screens slide in with depth ----------
         all("p-card").forEach((card) => {
           const phone = card.querySelector<HTMLElement>('[data-f="p-phone"]');
@@ -265,6 +311,8 @@ export default function Cinema({ rootId }: { rootId: string }) {
     return () => {
       window.removeEventListener("load", onLoad);
       io?.disconnect();
+      reelIo?.disconnect();
+      chipIo?.disconnect();
       mm.revert();
     };
   }, [rootId]);

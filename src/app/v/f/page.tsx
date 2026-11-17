@@ -3,7 +3,7 @@ import { Nunito } from "next/font/google";
 import type { CSSProperties } from "react";
 import s from "./f.module.css";
 import Cinema from "./Cinema";
-import { FAQ, GUIDES, KAI_NOTES, PAIRS, PROMISES, STORE, type Hue, type Usual } from "./data";
+import { FAQ, FEATURES, GUIDES, KAI_NOTES, OTHER_WAYS, PAIRS, PHOTO_MACROS, PHOTO_STEPS, PROMISES, SMALL_FEATURES, STORE, type Hue, type Usual } from "./data";
 
 // Variation F, "Without the guilt", cinematic cut. Same story, copy and claims as E. What changes is the
 // camera. The brief's emotion is relief, so the page is shot as one day: it opens in the app's night
@@ -127,6 +127,30 @@ function Layer({ name, f, eager, children, className }: { name?: string; f: stri
   );
 }
 
+
+// A feature film from the approved Take One set, shown as the tall reel it was made as. It is muted and
+// loads nothing until it is near the screen; Cinema.tsx plays it in view and pauses it off screen.
+function Reel({ film, alt, className }: { film: string; alt: string; className?: string }) {
+  return (
+    <figure className={`${s.reel} ${className ?? ""}`}>
+      <video
+        data-f="reel"
+        muted
+        loop
+        playsInline
+        controls
+        preload="none"
+        poster={`/film/features/${film}.jpg`}
+        aria-label={alt}
+        width={720}
+        height={1280}
+      >
+        <source src={`/film/features/${film}.mp4`} type="video/mp4" />
+      </video>
+    </figure>
+  );
+}
+
 const jsonLd = [
   {
     "@context": "https://schema.org",
@@ -194,8 +218,8 @@ export default function VariationF() {
                 <span className={s.line}><span className={`${s.soft} ${s.in3}`}>without the guilt.</span></span>
               </h1>
               <p className={`${s.lede} ${s.in4}`}>
-                Most calorie counters feel like a test you keep failing. Zen Lean shows food, fasting, sleep and
-                movement in one calm picture, and Kai, a coach who has read your data, tells you the truth kindly.
+                Snap your plate for calories and macros. Follow your fast hour by hour. See your sleep and recovery
+                from the Watch you already own. And Kai, a coach who has read it all, tells you the truth kindly.
               </p>
               <div className={`${s.ctaRow} ${s.in5}`}>
                 <Store />
@@ -223,6 +247,123 @@ export default function VariationF() {
                   <KaiLine text="You moved well, but calories ran high several days this week. Small portions can close the gap." where="Kai, this week" hue="nutrition" />
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+
+        {/* ---------- What it does: every feature, shown working in its own film ---------- */}
+        <section id="features" className={s.features} aria-labelledby="features-title">
+          <div className={s.wrap}>
+            <div className={s.head}>
+              <div>
+                <p className={s.kicker}>What it does</p>
+                <h2 id="features-title" className={s.h2}>Everything you were using three apps for.</h2>
+              </div>
+              <p className={s.sub}>
+                A food log that reads photos, a fasting timer that explains itself, and the sleep and recovery your
+                Watch already measures. One app, read together by Kai.
+              </p>
+            </div>
+          </div>
+
+          <nav className={s.chips} aria-label="Features on this page">
+            <div className={s.chipsInner}>
+              <a href="#photo" style={hueVar("nutrition")} data-f="chip"><span className={s.dot} aria-hidden="true" />Photo meals</a>
+              {FEATURES.map((f) => (
+                <a key={f.id} href={`#${f.id}`} style={hueVar(f.hue)} data-f="chip"><span className={s.dot} aria-hidden="true" />{f.id === "recovery" ? "Heart and recovery" : f.kicker}</a>
+              ))}
+              <a href="#water" style={hueVar("trend")} data-f="chip"><span className={s.dot} aria-hidden="true" />Water and check-in</a>
+            </div>
+          </nav>
+
+          {/* The lead feature: a photo of your plate */}
+          <article id="photo" className={`${s.chapter} ${s.chapterLead}`} style={hueVar("nutrition")} aria-labelledby="photo-title" data-f="chapter">
+            <div className={s.chapterSky} style={{ backgroundImage: "image-set(url(/sky/afternoon.webp) 1x, url(/sky/afternoon-xl.webp) 2x)" }} aria-hidden="true" />
+            <div className={`${s.wrap} ${s.chapterGrid}`}>
+              <div className={s.chapterText} data-f="ch-text">
+                <p className={s.chKicker}><span className={s.dot} aria-hidden="true" />Food, from a photo</p>
+                <h3 id="photo-title" className={s.chTitle}>Snap your plate. See what is on it.</h3>
+                <p className={s.chLede}>
+                  Point your camera at a meal and Zen Lean estimates calories, protein, carbs, fat and fibre, usually in
+                  a few seconds. Then it asks how much you had, so the number fits your portion.
+                </p>
+                <ol className={s.steps}>
+                  {PHOTO_STEPS.map((st) => (
+                    <li key={st.n}>
+                      <span className={s.stepN}>{st.n}</span>
+                      <p><b>{st.b}</b> {st.t}</p>
+                    </li>
+                  ))}
+                </ol>
+                <div className={s.macros} aria-label="One real result: oatmeal bowl with banana and cacao nibs">
+                  <p className={s.macrosHead}>Oatmeal bowl with banana and cacao nibs</p>
+                  <ul>
+                    {PHOTO_MACROS.map((m) => (
+                      <li key={m.k} style={hueVar(m.hue)}>
+                        <span>{m.k}</span>
+                        <b>{m.v}<small> {m.u}</small></b>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <div className={s.chapterReel} data-f="ch-reel">
+                <Reel film="photo" alt="Zen Lean photo meal: a photo of two oatmeal bowls, the question How much is this? with portion options, Estimating the portion, the result Oatmeal bowl with banana and cacao nibs at 380 kcal, and the day's budget updating to 1,404 kcal left." />
+              </div>
+            </div>
+            <div className={s.wrap}>
+              <div className={s.otherWays}>
+                <p className={s.otherHead}>No photo? Two other ways in.</p>
+                {OTHER_WAYS.map((o) => (
+                  <div key={o.film} className={s.otherCard} data-f="ch-other">
+                    <Reel film={o.film} alt={o.alt} className={s.reelSm} />
+                    <div>
+                      <h4>{o.b}</h4>
+                      <p>{o.t}</p>
+                    </div>
+                  </div>
+                ))}
+                <p className={s.otherFine}>Ten photo analyses a day. Re-log anything from Your foods, with favourites.</p>
+              </div>
+            </div>
+          </article>
+
+          {FEATURES.map((f, i) => (
+            <article key={f.id} id={f.id} className={`${s.chapter} ${i % 2 === 0 ? s.chapterFlip : ""}`} style={hueVar(f.hue)} aria-labelledby={`${f.id}-title`} data-f="chapter">
+              <div className={s.chapterSky} style={{ backgroundImage: `image-set(url(/sky/${f.sky}.webp) 1x, url(/sky/${f.sky}-xl.webp) 2x)` }} aria-hidden="true" />
+              <div className={`${s.wrap} ${s.chapterGrid}`}>
+                <div className={s.chapterText} data-f="ch-text">
+                  <p className={s.chKicker}><span className={s.dot} aria-hidden="true" />{f.kicker}</p>
+                  <h3 id={`${f.id}-title`} className={s.chTitle}>{f.title}</h3>
+                  <p className={s.chLede}>{f.lede}</p>
+                  <ul className={s.facts}>
+                    {f.facts.map((x) => (
+                      <li key={x.b}><b>{x.b}</b> {x.t}</li>
+                    ))}
+                  </ul>
+                  {f.kai && <KaiLine text={f.kai} where={f.kaiWhere} hue={f.hue} compact />}
+                  {f.fine && <p className={s.chFine}>{f.fine}</p>}
+                </div>
+                <div className={s.chapterReel} data-f="ch-reel">
+                  <Reel film={f.film} alt={f.filmAlt} />
+                </div>
+              </div>
+            </article>
+          ))}
+
+          <div id="water" className={s.wrap}>
+            <div className={s.smallGrid}>
+              {SMALL_FEATURES.map((f) => (
+                <article key={f.id} className={s.smallCard} style={hueVar(f.hue)} aria-labelledby={`${f.id}-title`} data-f="ch-other">
+                  <Reel film={f.film} alt={f.alt} className={s.reelSm} />
+                  <div>
+                    <p className={s.chKicker}><span className={s.dot} aria-hidden="true" />{f.kicker}</p>
+                    <h3 id={`${f.id}-title`}>{f.b}</h3>
+                    <p>{f.t}</p>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
@@ -370,56 +511,6 @@ export default function VariationF() {
           </div>
         </section>
 
-        {/* ---------- Less logging ---------- */}
-        <section id="features" className={s.less} aria-labelledby="less-title" data-f="less">
-          <div className={s.lessSkyClip} aria-hidden="true">
-            <div className={s.lessSky} data-f="less-sky" />
-          </div>
-          <div className={`${s.wrap} ${s.lessGrid}`}>
-            <div>
-              <p className={s.kicker}>Less data entry</p>
-              <h2 id="less-title" className={s.h2}>The logging that made you quit, mostly gone.</h2>
-              <p className={s.sub}>
-                Typing every ingredient into a search box is the part people give up on. So Zen Lean asks for as
-                little as it can.
-              </p>
-              <ol className={s.lessList}>
-                <li style={hueVar("nutrition")}>
-                  <span className={s.lessN}>1</span>
-                  <div>
-                    <h3>A photo of your plate.</h3>
-                    <p>Calories, protein, carbs, fat and fibre, estimated for you to check and adjust. Ten photo analyses a day. This oatmeal bowl with banana: 380 kcal, with 1,708 left of a 2,088 budget.</p>
-                  </div>
-                </li>
-                <li style={hueVar("recovery")}>
-                  <span className={s.lessN}>3</span>
-                  <div>
-                    <h3>Three taps in the morning.</h3>
-                    <p>Energy, body, mood. That is the whole check-in. Your taps sit beside overnight Recovery and never rewrite it.</p>
-                    <div className={s.tapCrop}>
-                      <img src="/shots/today/checkin-660.webp" alt="The three check-in taps on Zen Lean: Energy Good, Body Okay, Mood Good" width={660} height={1434} loading="lazy" />
-                    </div>
-                  </div>
-                </li>
-                <li style={hueVar("sleep")}>
-                  <span className={s.lessN}>0</span>
-                  <div>
-                    <h3>Extra devices to wear.</h3>
-                    <p>The Watch you already own measures sleep, resting heart rate, HRV and workouts through Apple Health. Start a 16:8 fast from your wrist. No second wearable, no second subscription.</p>
-                  </div>
-                </li>
-              </ol>
-            </div>
-            <div className={s.lessStage}>
-              <div className={s.lessBackRig} data-f="less-back">
-                <Phone shot="fasting" alt="Zen Lean Fasting on a 16:8 fast, 01:56:39 remaining at hour 14, fat burn rising, and the line You're in a steady stretch. Hydrate and keep your usual rhythm." className={s.lessBack} />
-              </div>
-              <div className={s.lessFrontRig} data-f="less-front">
-                <Phone shot="meals" alt="Zen Lean Meals: 1,708 kcal left today, 380 eaten of a 2,088 budget, macro bars, 3 of 8 glasses of water, and an oatmeal bowl with banana logged at 380 kcal" className={s.lessFront} />
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* ---------- Kai ---------- */}
         <section id="kai" className={s.kai} aria-labelledby="kai-title">

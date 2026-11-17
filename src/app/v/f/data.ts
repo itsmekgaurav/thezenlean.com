@@ -185,3 +185,122 @@ export const FAQ = [
     a: "Zen Lean is free to download, and a subscription is required after setup. You can pay monthly or yearly. Current prices are shown in the App Store.",
   },
 ];
+
+// ---------- The features, each shown working in its own approved film (Take One, 10 Nov) ----------
+// Every fact here is from MARKETING.md §4 (the feature inventory) or read off the film's own frames.
+// Things the inventory forbids are left out on purpose: no live-workout claim (needs iOS 26), no route
+// map, no voice logging, no citation for the fasting stages, no chat with Kai.
+export type Feature = {
+  id: string;
+  hue: Hue;
+  sky: "morning" | "afternoon" | "evening" | "night";
+  kicker: string;
+  title: string;
+  lede: string;
+  film: string;
+  filmAlt: string;
+  facts: { b: string; t: string }[];
+  kai?: string;
+  kaiWhere?: string;
+  fine?: string;
+};
+
+export const FEATURES: Feature[] = [
+  {
+    id: "fasting",
+    hue: "energy",
+    sky: "evening",
+    kicker: "Fasting",
+    title: "A countdown only says when. This says what is happening.",
+    lede: "A live countdown for your fast, and an hour-by-hour timeline of what your body is doing, in plain words, from the first hours after eating to deep into a long fast.",
+    film: "fasting",
+    filmAlt: "Zen Lean's fasting screen: 1 hour 56 minutes remaining in a 16:8 fast, the stage Fat burn rising, an hour-by-hour list of fasting stages, and a history of every fast with goals hit.",
+    facts: [
+      { b: "Five plans.", t: "14:10, 16:8, 18:6, 20:4 and OMAD-style." },
+      { b: "Eight stages, hour by hour.", t: "Each one explained in plain words while you are in it." },
+      { b: "Start it from your wrist.", t: "Start or end a fast on Apple Watch. It stays on your Lock Screen and in the Dynamic Island." },
+      { b: "Every fast on the record.", t: "Your history, with the last seven days at a glance." },
+    ],
+    kai: "You’re in a steady stretch. Hydrate and keep your usual rhythm.",
+    kaiWhere: "On the Fasting screen, hour 14 of 16:8",
+  },
+  {
+    id: "sleep",
+    hue: "sleep",
+    sky: "night",
+    kicker: "Sleep",
+    title: "One sleep score, and the reason for it.",
+    lede: "Zen Lean reads last night from your Apple Watch, scores it against what you needed, and shows the two or three things that actually moved the score.",
+    film: "sleep",
+    filmAlt: "Zen Lean's Sleep card: scored 79, Good, 81% of need, with what moved the score, a body-clock dial of last night against the usual window, overnight averages and sleep stages.",
+    facts: [
+      { b: "Against what you needed.", t: "5 h 51 m reads as 77% of your need, with the reason, not a red number." },
+      { b: "The whole night, stage by stage.", t: "Awake, REM, core and deep, hour by hour." },
+      { b: "Your body clock.", t: "Last night against your usual window, once it has 15 nights to learn from." },
+      { b: "A short night still counts.", t: "It is scored with lower confidence, not thrown away." },
+    ],
+    kai: "Some rest is still rest. Go easy on yourself today.",
+    kaiWhere: "On the Sleep card, after 5 h 51 m",
+  },
+  {
+    id: "recovery",
+    hue: "heart",
+    sky: "morning",
+    kicker: "Heart, recovery and Fitness Age",
+    title: "Your own range, not an average.",
+    lede: "Resting heart rate, HRV, breathing rate and wrist temperature, read overnight and compared with your usual range. Recovery and readiness are built from that, from your data alone.",
+    film: "heart",
+    filmAlt: "Zen Lean's Heart screen: resting heart rate in the usual range, today's heart against a 53 bpm baseline, Fitness Age 32 over twelve weeks, and what is helping and holding it back.",
+    facts: [
+      { b: "Recovery and readiness.", t: "What last night did to today, from your own overnight data." },
+      { b: "No baseline, no score.", t: "Until it knows your normal, it refuses to invent one." },
+      { b: "Fitness Age, every week.", t: "Twelve weeks of history, and the heart rate to train at in your own bpm." },
+      { b: "What helps, what holds you back.", t: "Named, in your own numbers, with one thing to try." },
+    ],
+    kai: "Heart rate ran high in today’s range. Easy movement and sleep tonight may help.",
+    kaiWhere: "On the Heart card",
+    fine: "Fitness Age uses the FRIEND registry. It is a wellness estimate, not a medical reading.",
+  },
+  {
+    id: "activity",
+    hue: "activity",
+    sky: "afternoon",
+    kicker: "Activity",
+    title: "Movement, counted honestly.",
+    lede: "Steps, move, exercise and stand from the Watch you already own, and workouts from any app, each counted once.",
+    film: "activity",
+    filmAlt: "Zen Lean's Activity screen: 1,075 kcal moved past a 500 goal, move, exercise and stand rings, and the day's workouts.",
+    facts: [
+      { b: "One workout, once.", t: "Sessions from your Watch or other apps are matched, and labelled with where they came from." },
+      { b: "Calories you can trust.", t: "Exercise is credited at 65%, capped at 900 a day, because wearables over-count." },
+      { b: "Day strain.", t: "How hard the day has been, as a pacing hint, never a limit." },
+      { b: "A note on each workout.", t: "What the session did, in plain language." },
+    ],
+    kai: "Start tiny today. Consistency beats one perfect day.",
+    kaiWhere: "On the Activity card",
+  },
+];
+
+export const PHOTO_STEPS = [
+  { n: "1", b: "Snap it.", t: "Open the camera, or pick a photo already on your phone." },
+  { n: "2", b: "Say how much.", t: "“How much is this?” Tap a portion or slide the weight. A photo alone cannot tell a small bowl from a big one." },
+  { n: "3", b: "Check and save.", t: "Every number is yours to adjust before it counts. Then your day updates itself." },
+];
+
+export const PHOTO_MACROS = [
+  { k: "Calories", v: "380", u: "kcal", hue: "energy" as Hue },
+  { k: "Protein", v: "10", u: "g", hue: "activity" as Hue },
+  { k: "Carbs", v: "65", u: "g", hue: "energy" as Hue },
+  { k: "Fat", v: "12", u: "g", hue: "heart" as Hue },
+  { k: "Fibre", v: "9", u: "g", hue: "recovery" as Hue },
+];
+
+export const OTHER_WAYS = [
+  { film: "describe", b: "Describe it.", t: "Type what you ate. No photo, and it does not use one of your ten.", alt: "Typing a meal description into Zen Lean and getting calories and macros back." },
+  { film: "barcode", b: "Scan the barcode.", t: "The label’s own nutrition, looked up for you.", alt: "Scanning a packaged food's barcode in Zen Lean." },
+];
+
+export const SMALL_FEATURES = [
+  { id: "water", film: "water", hue: "trend" as Hue, kicker: "Water", b: "Tap a glass. See if you are on pace.", t: "Reminders only between the times you choose.", alt: "Zen Lean's water card: tapping glasses toward the day's goal." },
+  { id: "checkin", film: "checkin", hue: "recovery" as Hue, kicker: "Morning check-in", b: "Three taps. Energy, body, mood.", t: "Over about two weeks it learns what a normal morning looks like for you.", alt: "Zen Lean's morning check-in: Energy Good, Body Okay, Mood Good." },
+];
