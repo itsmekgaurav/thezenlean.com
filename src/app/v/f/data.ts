@@ -200,6 +200,7 @@ export type Feature = {
   film: string;
   filmAlt: string;
   facts: { b: string; t: string }[];
+  tiles: { img?: string; big?: string; b: string; t: string; alt: string; fit?: "contain" }[];
   kai?: string;
   kaiWhere?: string;
   fine?: string;
@@ -215,6 +216,11 @@ export const FEATURES: Feature[] = [
     lede: "A live countdown for your fast, and an hour-by-hour timeline of what your body is doing, in plain words, from the first hours after eating to deep into a long fast.",
     film: "fasting",
     filmAlt: "Zen Lean's fasting screen: 1 hour 56 minutes remaining in a 16:8 fast, the stage Fat burn rising, an hour-by-hour list of fasting stages, and a history of every fast with goals hit.",
+    tiles: [
+      { img: "fast-countdown", fit: "contain", b: "A live countdown.", t: "And the stage you are in right now.", alt: "Fasting countdown at 1 hour 56 minutes remaining, Fat burn rising, with a stage bar from start to goal 16 h." },
+      { img: "fast-stage", fit: "contain", b: "Eight stages, hour by hour.", t: "Explained in plain words while you are in them.", alt: "Fasting stage card: You are here, Lipolysis, fat burn rising, 14 h 7 m into this fast." },
+      { img: "fast-history", b: "Every fast on the record.", t: "14:10, 16:8, 18:6, 20:4 or OMAD-style.", alt: "Fasting history: 16 h 12 m, 15 h 54 m, 16 h 42 m, 16 h 48 m and 16 h 31 m, most marked Goal hit." },
+    ],
     facts: [
       { b: "Five plans.", t: "14:10, 16:8, 18:6, 20:4 and OMAD-style." },
       { b: "Eight stages, hour by hour.", t: "Each one explained in plain words while you are in it." },
@@ -233,6 +239,11 @@ export const FEATURES: Feature[] = [
     lede: "Zen Lean reads last night from your Apple Watch, scores it against what you needed, and shows the two or three things that actually moved the score.",
     film: "sleep",
     filmAlt: "Zen Lean's Sleep card: scored 79, Good, 81% of need, with what moved the score, a body-clock dial of last night against the usual window, overnight averages and sleep stages.",
+    tiles: [
+      { img: "sleep-score", fit: "contain", b: "Scored against your need.", t: "With the reason, in one line.", alt: "Sleep card: 77, Good, 76% of need, 5 h 51 m asleep, 98% efficiency, and the line Short sleep logged. Stack small wins, not heroics." },
+      { img: "sleep-stages", b: "Stage by stage.", t: "Awake, REM, core and deep.", alt: "Sleep stages chart from 11:20 PM to 5:17 AM: awake 5 m, REM 1 h 17 m, core 3 h 36 m, deep 57 m." },
+      { img: "sleep-clock", b: "Your body clock.", t: "Last night against your usual window.", alt: "Circadian dial: fell asleep 11:20 PM, woke 5:17 AM, against the usual window." },
+    ],
     facts: [
       { b: "Against what you needed.", t: "5 h 51 m reads as 77% of your need, with the reason, not a red number." },
       { b: "The whole night, stage by stage.", t: "Awake, REM, core and deep, hour by hour." },
@@ -251,6 +262,11 @@ export const FEATURES: Feature[] = [
     lede: "Resting heart rate, HRV, breathing rate and wrist temperature, read overnight and compared with your usual range. Recovery and readiness are built from that, from your data alone.",
     film: "heart",
     filmAlt: "Zen Lean's Heart screen: resting heart rate in the usual range, today's heart against a 53 bpm baseline, Fitness Age 32 over twelve weeks, and what is helping and holding it back.",
+    tiles: [
+      { img: "heart-range", fit: "contain", b: "Your own range.", t: "Not a stranger’s average.", alt: "Heart card: resting heart rate 56 bpm running high against today's range of 50 to 55." },
+      { img: "recovery-rings", fit: "contain", b: "Recovery from your night.", t: "Sleep need, recovery and day strain.", alt: "Three rings: Sleep Need 76%, Recovery 66, Day Strain 0.0." },
+      { img: "fitness-age", b: "Fitness Age, every week.", t: "And what is holding it back.", alt: "Fitness Age 30, in line with your age, with a line of weekly readings." },
+    ],
     facts: [
       { b: "Recovery and readiness.", t: "What last night did to today, from your own overnight data." },
       { b: "No baseline, no score.", t: "Until it knows your normal, it refuses to invent one." },
@@ -270,6 +286,11 @@ export const FEATURES: Feature[] = [
     lede: "Steps, move, exercise and stand from the Watch you already own, and workouts from any app, each counted once.",
     film: "activity",
     filmAlt: "Zen Lean's Activity screen: 1,075 kcal moved past a 500 goal, move, exercise and stand rings, and the day's workouts.",
+    tiles: [
+      { img: "activity-rings", fit: "contain", b: "Move, exercise, stand.", t: "From the Watch you already own.", alt: "Activity: 430 kcal moved, closing on a 500 goal, with move, exercise and stand rings." },
+      { img: "activity-hourly", b: "Hour by hour.", t: "Move, exercise and stand, where each came from.", alt: "Hourly activity timeline: move 385 kcal, exercise 24 min and stand 8 hrs, as bars across the day." },
+      { big: "65%", b: "Honest exercise calories.", t: "Credited at 65%, capped at 900 a day.", alt: "" },
+    ],
     facts: [
       { b: "One workout, once.", t: "Sessions from your Watch or other apps are matched, and labelled with where they came from." },
       { b: "Calories you can trust.", t: "Exercise is credited at 65%, capped at 900 a day, because wearables over-count." },

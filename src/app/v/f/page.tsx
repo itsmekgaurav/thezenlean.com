@@ -16,7 +16,7 @@ import { FAQ, FEATURES, GUIDES, KAI_NOTES, OTHER_WAYS, PAIRS, PHOTO_MACROS, PHOT
 const round = Nunito({ subsets: ["latin"], weight: ["400", "600", "700", "800", "900"], variable: "--f-nunito", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Zen Lean: a calorie tracker without the guilt",
+  title: "Zen Lean: calorie tracker, fasting, sleep in one app",
   description:
     "A calm calorie tracker for iPhone and Apple Watch. AI photo meals, fasting, sleep and recovery, and Kai, a coach who tells you the truth kindly.",
   robots: { index: false, follow: false },
@@ -212,14 +212,14 @@ export default function VariationF() {
 
           <div className={`${s.wrap} ${s.heroGrid}`}>
             <div className={s.heroCopy} data-f="h-copy">
-              <p className={`${s.eyebrow} ${s.in1}`}>If you quit counting calories, it was not you.</p>
+              <p className={`${s.eyebrow} ${s.in1}`}>Food, fasting, sleep, heart and recovery, tracked together.</p>
               <h1 id="hero-title" className={s.h1}>
-                <span className={s.line}><span className={s.in2}>Calorie tracking,</span></span>{" "}
-                <span className={s.line}><span className={`${s.soft} ${s.in3}`}>without the guilt.</span></span>
+                <span className={s.line}><span className={s.in2}>All your health,</span></span>{" "}
+                <span className={s.line}><span className={`${s.soft} ${s.in3}`}>in one calm app.</span></span>
               </h1>
               <p className={`${s.lede} ${s.in4}`}>
-                Snap your plate for calories and macros. Follow your fast hour by hour. See your sleep and recovery
-                from the Watch you already own. And Kai, a coach who has read it all, tells you the truth kindly.
+                Calories from a photo of your plate. Your fast, hour by hour. Sleep, heart and recovery from the
+                Watch you already own. And Kai, a coach who has read it all, tells you the truth kindly.
               </p>
               <div className={`${s.ctaRow} ${s.in5}`}>
                 <Store />
@@ -232,11 +232,18 @@ export default function VariationF() {
               </ul>
             </div>
             <div className={s.heroStage}>
-              {/* The hero says calorie tracking, so it shows calorie tracking: a real photo meal on the left
-                  (the plate and numbers from the Photo meal film), and the Meals screen it lands on. */}
+              {/* The hero says all your health in one app, so it shows them together: Insights (sleep,
+                  activity, heart) on the phone, the fast in progress, and a real photo meal. */}
               <div className={s.heroRig} data-f="h-phone">
                 <div className={s.heroRise}>
-                  <Phone shot="meals" alt="Zen Lean Meals screen: 1,708 kcal left today of a 2,088 budget, with protein, carbs, fat and fibre, water, and the oatmeal bowl with banana logged at 380 kcal." className={s.heroFront} priority />
+                  <Phone shot="insights" alt="Zen Lean Insights: a 23 of 7 day solid streak, a 14 of 16 hour fast in progress, Kai's note on the week, sleep scored 77 at 77% of need, activity at 40% of daily targets, and resting heart rate 56 bpm." className={s.heroFront} priority />
+                </div>
+              </div>
+              <div className={s.heroFastRig} data-f="h-pull">
+                <div className={s.heroRiseLate}>
+                  <figure className={s.heroFast}>
+                    <img src="/shots/crops/fast-countdown.webp" width={760} height={363} alt="Fasting countdown: 1 hour 56 minutes remaining, Fat burn rising." loading="eager" />
+                  </figure>
                 </div>
               </div>
               <div className={s.heroBackRig} data-f="h-back">
@@ -350,17 +357,28 @@ export default function VariationF() {
                   <p className={s.chKicker}><span className={s.dot} aria-hidden="true" />{f.kicker}</p>
                   <h3 id={`${f.id}-title`} className={s.chTitle}>{f.title}</h3>
                   <p className={s.chLede}>{f.lede}</p>
-                  <ul className={s.facts}>
-                    {f.facts.map((x) => (
-                      <li key={x.b}><b>{x.b}</b> {x.t}</li>
-                    ))}
-                  </ul>
                   {f.kai && <KaiLine text={f.kai} where={f.kaiWhere} hue={f.hue} compact />}
                   {f.fine && <p className={s.chFine}>{f.fine}</p>}
                 </div>
                 <div className={s.chapterReel} data-f="ch-reel">
                   <Reel film={f.film} alt={f.filmAlt} />
                 </div>
+              </div>
+              <div className={s.wrap}>
+                <ul className={s.tiles}>
+                  {f.tiles.map((t) => (
+                    <li key={t.b} className={s.tile} data-f="tile">
+                      <div className={s.tileArt}>
+                        {t.img ? (
+                          <img src={`/shots/crops/${t.img}.webp`} alt={t.alt} width={760} height={420} loading="lazy" className={t.fit === "contain" ? s.tileContain : undefined} />
+                        ) : (
+                          <span className={s.tileBig} aria-hidden="true">{t.big}</span>
+                        )}
+                      </div>
+                      <p><b>{t.b}</b> {t.t}</p>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </article>
           ))}
