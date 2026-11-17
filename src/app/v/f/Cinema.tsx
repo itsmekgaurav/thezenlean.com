@@ -74,6 +74,49 @@ export default function Cinema({ rootId }: { rootId: string }) {
       reels.forEach((v) => reelIo!.observe(v));
     }
 
+    // ---------- App cards (Widgets.tsx): rings fill, bars grow and numbers count when they arrive ----------
+    // A card is armed (drawn empty) only here, so without JavaScript or with reduced motion it is finished.
+    const cards = Array.from(root.querySelectorAll<HTMLElement>("[data-w]"));
+    let cardIo: IntersectionObserver | undefined;
+    if (cards.length && !reduce.matches) {
+      cards.forEach((c) => c.setAttribute("data-arm", ""));
+      cardIo = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            const c = e.target as HTMLElement;
+            c.setAttribute("data-on", "");
+            cardIo!.unobserve(c);
+            c.querySelectorAll<HTMLElement>("[data-count]").forEach((n) => {
+              const to = Number(n.dataset.count);
+              const dec = Number(n.dataset.dec ?? 0);
+              const o = { v: 0 };
+              n.textContent = (0).toFixed(dec);
+              gsap.to(o, { v: to, duration: 1.5, delay: 0.15, ease: "power3.out", onUpdate: () => { n.textContent = o.v.toFixed(dec); } });
+            });
+          });
+        },
+        { threshold: 0.4 },
+      );
+      cards.forEach((c) => cardIo!.observe(c));
+    }
+
+    // The fasting countdown is live: it ticks down once a second, as it does in the app. With reduced
+    // motion it stays still.
+    const clocks = Array.from(root.querySelectorAll<HTMLElement>("[data-clock]"));
+    let tick: number | undefined;
+    if (clocks.length && !reduce.matches) {
+      const pad = (n: number) => String(n).padStart(2, "0");
+      tick = window.setInterval(() => {
+        clocks.forEach((c) => {
+          let t = Number(c.dataset.clock) - 1;
+          if (t < 0) t = 6998;
+          c.dataset.clock = String(t);
+          c.textContent = `${pad(Math.floor(t / 3600))}:${pad(Math.floor((t % 3600) / 60))}:${pad(t % 60)}`;
+        });
+      }, 1000);
+    }
+
     // ---------- Feature chips: the one for the chapter you are reading is lit ----------
     const chips = all("chip");
     const setChip = (id: string) => chips.forEach((c) => c.setAttribute("aria-current", String(c.getAttribute("href") === `#${id}`)));
@@ -313,6 +356,8 @@ export default function Cinema({ rootId }: { rootId: string }) {
       io?.disconnect();
       reelIo?.disconnect();
       chipIo?.disconnect();
+      cardIo?.disconnect();
+      if (tick) window.clearInterval(tick);
       mm.revert();
     };
   }, [rootId]);

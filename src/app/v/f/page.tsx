@@ -3,6 +3,7 @@ import { Nunito } from "next/font/google";
 import type { CSSProperties } from "react";
 import s from "./f.module.css";
 import Cinema from "./Cinema";
+import { FastCountdown, WIDGETS, type WidgetName } from "./Widgets";
 import { FAQ, FEATURES, GUIDES, KAI_NOTES, OTHER_WAYS, PAIRS, PHOTO_MACROS, PHOTO_STEPS, PROMISES, SMALL_FEATURES, STORE, type Hue, type Usual } from "./data";
 
 // Variation F, "Without the guilt", cinematic cut. Same story, copy and claims as E. What changes is the
@@ -23,6 +24,11 @@ export const metadata: Metadata = {
 };
 
 const ROOT_ID = "zen-f";
+function Widget({ name }: { name: WidgetName }) {
+  const C = WIDGETS[name];
+  return <C />;
+}
+
 const hueVar = (h: Hue) => ({ "--hue": `var(--${h})` }) as CSSProperties;
 
 function Phone({ shot, alt, className, priority, sizes = "(max-width: 900px) 60vw, 340px" }: { shot: string; alt: string; className?: string; priority?: boolean; sizes?: string }) {
@@ -241,9 +247,9 @@ export default function VariationF() {
               </div>
               <div className={s.heroFastRig} data-f="h-pull">
                 <div className={s.heroRiseLate}>
-                  <figure className={s.heroFast}>
-                    <img src="/shots/crops/fast-countdown.webp" width={760} height={363} alt="Fasting countdown: 1 hour 56 minutes remaining, Fat burn rising." loading="eager" />
-                  </figure>
+                  <div className={s.heroFast}>
+                    <FastCountdown hero />
+                  </div>
                 </div>
               </div>
               <div className={s.heroBackRig} data-f="h-back">
@@ -369,11 +375,7 @@ export default function VariationF() {
                   {f.tiles.map((t) => (
                     <li key={t.b} className={s.tile} data-f="tile">
                       <div className={s.tileArt}>
-                        {t.img ? (
-                          <img src={`/shots/crops/${t.img}.webp`} alt={t.alt} width={760} height={420} loading="lazy" className={t.fit === "contain" ? s.tileContain : undefined} />
-                        ) : (
-                          <span className={s.tileBig} aria-hidden="true">{t.big}</span>
-                        )}
+                        <Widget name={t.w} />
                       </div>
                       <p><b>{t.b}</b> {t.t}</p>
                     </li>
