@@ -37,8 +37,22 @@ const I = {
   spark: <svg viewBox="0 0 24 24"><path d="M10 3.5 11.6 8.4 16.5 10 11.6 11.6 10 16.5 8.4 11.6 3.5 10 8.4 8.4Z M17.5 14l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" /></svg>,
   clock: <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" strokeWidth="1.8" /><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>,
   sun: <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.6" fill="none" stroke="currentColor" strokeWidth="1.6" /><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>,
+  chev: <svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>,
+  info: <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.6" /><path d="M12 11v6M12 7.5v.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>,
+  eye: <svg viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" fill="none" stroke="currentColor" strokeWidth="1.6" /><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="1.6" /></svg>,
   face: <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ffcc3d" /><circle cx="8.8" cy="10" r="1.3" fill="#5b3a00" /><circle cx="15.2" cy="10" r="1.3" fill="#5b3a00" /><path d="M8.5 15h7" stroke="#5b3a00" strokeWidth="1.5" strokeLinecap="round" /></svg>,
 };
+
+/** The app's Kai row: a sparkle, one line from Kai, and a chevron. */
+function KaiRow({ text }: { text: string }) {
+  return (
+    <div className={w.kaiRow}>
+      <span className={w.kaiSpark}>{I.spark}</span>
+      <p>{text}</p>
+      <span className={w.chev}>{I.chev}</span>
+    </div>
+  );
+}
 
 /* ================= Fasting ================= */
 
@@ -57,6 +71,7 @@ export function FastCountdown({ hero }: { hero?: boolean }) {
         ))}
       </div>
       <div className={w.segLabels}><span>Start</span><span>4h</span><span>8h</span><span>12h</span><span>Goal 16h</span></div>
+      {!hero && <p className={w.allStages}>All stages <span className={w.chevSm}>{I.chev}</span></p>}
     </Card>
   );
 }
@@ -75,7 +90,7 @@ export function FastStage() {
         </div>
         <span className={w.pill}>12-16h</span>
       </div>
-      <p className={`${w.stageBody} ${w.rise}`} style={d(2)}>Lipolysis releases fatty acids from fat tissue so muscles and other organs can burn them. As glycogen runs lower, fat supplies a larger share of energy.</p>
+      <p className={`${w.stageBody} ${w.rise}`} style={d(2)}>Lipolysis releases fatty acids from fat tissue so muscles and other organs can burn them. As glycogen runs lower, fat supplies a larger share of energy. This is the ramp toward a deeper fast.</p>
     </Card>
   );
 }
@@ -84,12 +99,14 @@ const HISTORY = [
   { day: "Thu", n: 5, dur: "16h 12m", span: "Wed, 9:31 PM → Thu, 1:43 PM", tag: "Goal hit", close: false },
   { day: "Wed", n: 4, dur: "15h 54m", span: "Tue, 9:40 PM → Wed, 1:34 PM", tag: "Close", close: true },
   { day: "Tue", n: 3, dur: "16h 42m", span: "Mon, 9:40 PM → Tue, 2:22 PM", tag: "Goal hit", close: false },
+  { day: "Mon", n: 2, dur: "16h 48m", span: "Sun, 9:40 PM → Mon, 2:28 PM", tag: "Beat goal", close: false },
+  { day: "Sun", n: 1, dur: "16h 31m", span: "Sat, 9:40 PM → Sun, 2:11 PM", tag: "Goal hit", close: false },
 ];
 
 /** Fasting screen: History. */
 export function FastHistory() {
   return (
-    <Card name="fast-history" className={w.histCard} label="Fasting history: 16 h 12 m goal hit, 15 h 54 m close, 16 h 42 m goal hit.">
+    <Card name="fast-history" className={w.histCard} label="Fasting history: 16 h 12 m goal hit, 15 h 54 m close, 16 h 42 m goal hit, 16 h 48 m beat goal, 16 h 31 m goal hit.">
       <div className={w.histHead}><p className={w.cap}>History</p><span>11</span></div>
       <ul className={w.hist}>
         {HISTORY.map((h, i) => (
@@ -132,6 +149,7 @@ export function SleepScore() {
         <span><em>{I.clock}5h 57m</em>In bed</span>
         <span><em>{I.heart}<span><N to={98} />%</span></em>Efficiency</span>
       </div>
+      <KaiRow text="Short sleep logged. Stack small wins, not heroics." />
     </Card>
   );
 }
@@ -154,6 +172,11 @@ export function SleepStages() {
         <div className={w.plot}>
           {LANES.map((l, i) => <i key={l} className={w[`lane${i}`]} />)}
           <div className={w.wipe}>
+            {HYP.slice(1).map(([lane, a], i) => {
+              const prev = HYP[i][0];
+              const lo = Math.min(lane, prev), hi = Math.max(lane, prev);
+              return <i key={`c${i}`} className={w.link} style={{ left: `${a}%`, top: `${lo * 25 + 12.5}%`, height: `${(hi - lo) * 25}%` }} />;
+            })}
             {HYP.map(([lane, a, b], i) => (
               <span key={i} className={w[`b${lane}`]} style={{ left: `${a}%`, width: `${b - a}%`, top: `${lane * 25 + 4}%` }} />
             ))}
@@ -161,11 +184,21 @@ export function SleepStages() {
         </div>
       </div>
       <div className={w.axis}><span style={{ left: "29%" }}>1 AM</span><span style={{ left: "62.6%" }}>3 AM</span></div>
-      <div className={w.legend}>
-        <span><i className={w.b0} />Awake <b>5m</b></span>
-        <span><i className={w.b1} />REM <b>1h 17m</b></span>
-        <span><i className={w.b2} />Core <b>3h 36m</b></span>
-        <span><i className={w.b3} />Deep <b>57m</b></span>
+      <div className={w.share}>
+        <i className={`${w.b0} ${w.shareDot}`} />
+        <i className={w.b1} style={{ flex: 22 }} />
+        <i className={w.b2} style={{ flex: 62 }} />
+        <i className={w.b3} style={{ flex: 16 }} />
+      </div>
+      <ul className={w.legend}>
+        <li><i className={w.b0} />Awake<b>5m</b><span>2%</span></li>
+        <li><i className={w.b1} />REM<b>1h 17m</b><span>22%</span></li>
+        <li><i className={w.b2} />Core<b>3h 36m</b><span>62%</span></li>
+        <li><i className={w.b3} />Deep<b>57m</b><span>16%</span></li>
+      </ul>
+      <div className={`${w.stats} ${w.stats2}`}>
+        <span><em><span className={w.blue}>{I.clock}</span>5h 57m</em>Time in bed</span>
+        <span><em><span className={w.amber}>{I.eye}</span>5m</em>Awake</span>
       </div>
     </Card>
   );
@@ -204,8 +237,8 @@ export function SleepClock() {
           <text x="60" y="71" className={w.dialT}>rhythm</text>
         </svg>
         <div className={w.times}>
-          <p className={w.rise} style={d(1)}><b className={w.blue}>11:20 PM</b>Fell asleep</p>
-          <p className={w.rise} style={d(2)}><b className={w.violet}>5:17 AM</b>Woke up</p>
+          <p className={w.rise} style={d(1)}><b className={w.blue}><i className={w.bullet} />11:20 PM</b>Fell asleep</p>
+          <p className={w.rise} style={d(2)}><b className={w.violet}><i className={w.bullet} />5:17 AM</b>Woke up</p>
         </div>
       </div>
       <div className={w.keys}><span><i className={w.keyBlue} />Last night</span><span><i />Your usual window</span></div>
@@ -245,6 +278,7 @@ export function HeartRange() {
           <span className={w.rangeLabels}><span>50</span><span>Today&apos;s range</span><span>55</span></span>
         </span>
       </div>
+      <KaiRow text="Heart rate ran high in today's range. Easy movement and sleep tonight may help." />
     </Card>
   );
 }
@@ -269,6 +303,7 @@ function Ring({ id, value, show, label, from, to, tail }: { id: string; value: n
 export function RecoveryRings() {
   return (
     <Card name="recovery-rings" className={w.ringsCard} label="Sleep Need 76%, Recovery 66, Day Strain 0.0.">
+      <span className={w.info}>{I.info}</span>
       <Ring id="wg-need" value={76} show={<><N to={76} />%</>} label="Sleep Need" from="#5ee0ff" to="#8b8cf6" />
       <Ring id="wg-rec" value={66} show={<N to={66} />} label="Recovery" from="#ffd25a" to="#ff8a2a" />
       <Ring id="wg-strain" value={14} show="0.0" label="Day Strain" from="#2a3348" to="#a99adf" tail />
@@ -300,7 +335,10 @@ export function FitnessAge() {
         {xs.map((x, i) => <circle key={x} cx={x} cy={ys[i]} r="1.8" className={w.fitDot} style={d(i)} />)}
         <circle cx={end} cy="40" r="3.4" className={w.fitEnd} />
       </svg>
-      <p className={w.dim}>9 weekly readings over 11 weeks. Dashed line is your age, 30.</p>
+      <div className={w.fitTint}>
+        <p className={w.fitNote}>9 weekly readings over 11 weeks. Dashed line is your age, 30.</p>
+      </div>
+      <KaiRow text="What's affecting it & how to improve" />
     </Card>
   );
 }
