@@ -57,7 +57,10 @@
 }
 
 /* ---------- Type ---------- */
-.h1 { font-size: clamp(50px, 5.3vw, 78px); line-height: 0.98; font-weight: 900; letter-spacing: -0.035em; text-shadow: 0 6px 50px rgba(3, 8, 28, 0.55); }
+/* The shadow is a filter on the whole h1, not a text-shadow: each line sits in an overflow-hidden mask
+   for its entrance, and a blurred text-shadow clipped by that mask drew a dark box behind every line
+   (seen by the owner, 17 Nov). A filter is applied after the clip, so it follows the letters only. */
+.h1 { font-size: clamp(50px, 5.3vw, 78px); line-height: 0.98; font-weight: 900; letter-spacing: -0.035em; filter: drop-shadow(0 4px 24px rgba(3, 8, 28, 0.5)); }
 .h2 { font-size: clamp(34px, 3.9vw, 56px); line-height: 1.04; font-weight: 800; letter-spacing: -0.03em; }
 .h2Sm { font-size: clamp(30px, 3vw, 42px); line-height: 1.06; font-weight: 800; letter-spacing: -0.025em; }
 .h3 { font-size: 22px; line-height: 1.2; font-weight: 800; letter-spacing: -0.015em; }
@@ -84,6 +87,9 @@
 .storeSm { padding: 10px 16px; font-size: 15px; border-radius: 13px; }
 .apple { width: 17px; height: 17px; margin-top: -2px; }
 .storeSm .apple { width: 14px; height: 14px; }
+/* Fine print over the dawn sky: the faint grey vanished against the warm horizon, so it reads in full
+   ink on a small dark pill, the same treatment as the closing scene. */
+.heroCopy .fine { color: var(--ink); font-weight: 700; max-width: none; padding: 8px 14px; border-radius: 14px; background: rgba(8, 14, 38, 0.62); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 .ctaRow { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; margin-top: 34px; }
 .ctaCenter { justify-content: center; text-align: center; }
 
@@ -212,7 +218,7 @@
 .contrast { position: relative; background: #101219; }
 .contrast .layer { --anchor: 50%; --lift: -0.66; }
 .cold { position: absolute; inset: 0; opacity: 0; background: radial-gradient(ellipse at 50% 30%, #1b1d23, #0f1115 75%); }
-.cShade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8, 14, 38, 0.62), rgba(8, 14, 38, 0.38) 34%, rgba(8, 14, 38, 0.48) 70%, rgba(11, 21, 51, 0.9)); }
+.cShade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8, 14, 38, 0.78), rgba(8, 14, 38, 0.6) 30%, rgba(8, 14, 38, 0.42) 52%, rgba(8, 14, 38, 0.5) 72%, rgba(11, 21, 51, 0.9)); }
 .cStage { position: relative; z-index: 2; padding-top: 112px; padding-bottom: 96px; }
 .contrast .head { margin-bottom: 40px; }
 .cGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px 44px; }
@@ -226,26 +232,25 @@
 
 .frag {
   flex: 1; width: 100%; font-family: var(--u-font); color: var(--u-ink);
-  background: var(--u-bg); border: 1px solid var(--u-edge); border-radius: 4px; padding: 12px 14px 12px;
-  display: grid; grid-template-columns: 1fr auto; align-content: start; align-items: baseline; gap: 2px 12px;
-  filter: saturate(0.7);
+  background: var(--u-bg); border: 1px solid var(--u-edge); border-radius: 14px; padding: 16px 20px 18px;
+  display: grid; grid-template-columns: 1fr auto; align-content: start; align-items: baseline; gap: 4px 12px;
+  box-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.9);
 }
 .fragLabel { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--u-dim); }
 .fragValue { grid-column: 1 / -1; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; color: var(--u-ink); display: flex; align-items: baseline; gap: 10px; }
-.fragVerdict { font-style: normal; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #fff; background: var(--u-red); padding: 2px 7px; border-radius: 2px; }
+.fragVerdict { font-style: normal; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #fff; background: var(--u-red); padding: 3px 8px; border-radius: 6px; }
 .fragNote { grid-column: 1 / -1; font-size: 13px; color: var(--u-dim); line-height: 1.35; }
 .frag_over .fragValue, .frag_target .fragValue, .frag_score .fragValue { color: var(--u-red); }
 .frag_alert .fragValue { font-size: 18px; }
-.fragBar { grid-column: 1 / -1; height: 6px; background: #2a2d34; border-radius: 1px; margin: 6px 0 4px; position: relative; overflow: hidden; }
+.fragBar { grid-column: 1 / -1; height: 6px; background: #2a2d34; border-radius: 3px; margin: 6px 0 4px; position: relative; overflow: hidden; }
 .fragBar i { position: absolute; inset: 0 0 0 0; background: linear-gradient(90deg, #6d727c 0 82%, var(--u-red) 82%); }
 .fragDays { grid-column: 1 / -1; display: flex; gap: 4px; margin: 6px 0 4px; }
-.fragDays i { width: 18px; height: 6px; background: #4a4f58; border-radius: 1px; }
+.fragDays i { width: 22px; height: 6px; background: #4a4f58; border-radius: 3px; }
 .fragDays .fragMiss { background: transparent; outline: 1px solid var(--u-red); outline-offset: -1px; }
 
 .zenCard {
   flex: 1; width: 100%; display: flex; gap: 13px; align-items: flex-start; padding: 15px 18px; border-radius: 22px;
-  background: rgba(16, 26, 58, 0.8); border: 1px solid rgba(255, 255, 255, 0.13);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  background: rgba(16, 26, 58, 0.9); border: 1px solid rgba(255, 255, 255, 0.13);
   box-shadow: 0 24px 50px -28px rgba(0, 0, 0, 0.8);
 }
 .zenCard p { font-size: 17px; line-height: 1.4; font-weight: 600; }
@@ -255,21 +260,33 @@
 .cFoot { margin-top: 28px !important; font-size: 13px; color: var(--faint); max-width: 92ch; }
 
 /* In motion, the usual line and Zen Lean's line share one place, so one can dissolve into the other. */
-.root[data-motion] .slot { grid-template-columns: minmax(0, 1fr); }
-.root[data-motion] .usualWrap, .root[data-motion] .zenWrap { grid-area: 1 / 1; }
-.root[data-motion] .usualWrap { z-index: 1; align-self: start; }
-.root[data-motion] .frag { animation: jitter 0.46s steps(1, end) infinite; }
-.root[data-motion="full"] .cStage { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 78px; padding-bottom: 28px; }
-.root[data-motion="full"] .contrast .head { margin-bottom: 30px; }
-.root[data-motion="full"] .cGrid { gap: 22px 44px; }
-.root[data-motion="full"] .cFoot { margin-top: 22px !important; }
-@keyframes jitter {
-  0% { translate: 0 0; }
-  20% { translate: -1px 0; }
-  45% { translate: 1px 0.5px; }
-  70% { translate: 0 -0.5px; }
-  85% { translate: 0.5px 0; }
-}
+.root[data-motion="full"] .slot { grid-template-columns: minmax(0, 1fr); }
+.root[data-motion="full"] .usualWrap, .root[data-motion="full"] .zenWrap { grid-area: 1 / 1; }
+.root[data-motion="full"] .usualWrap { z-index: 1; }
+.root[data-motion="full"] .cStage { height: 100vh; min-height: 620px; display: flex; flex-direction: column; justify-content: center; padding-top: 72px; padding-bottom: 24px; }
+.root[data-motion="full"] .contrast .head { margin-bottom: clamp(24px, 5vh, 48px); }
+/* Desktop in motion: the six moments play one at a time in the same place, large, instead of a grid of
+   twelve small cards (the owner, 17 Nov: "these cards look bad"). Cinema.tsx steps through them. */
+.root[data-motion="full"] .cGrid { display: grid; grid-template-columns: minmax(0, 1fr); width: min(100%, 760px); margin: 0 auto; }
+.root[data-motion="full"] .cCell { grid-area: 1 / 1; }
+.root[data-motion="full"] .cMoment { font-size: 28px; letter-spacing: -0.02em; margin-bottom: 18px !important; justify-content: center; }
+.root[data-motion="full"] .slotTag { text-align: center; font-size: 12px; margin-bottom: 10px; }
+.root[data-motion="full"] .usualWrap .slotTag { color: #c9ccd3; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7); }
+.root[data-motion="full"] .frag { padding: 24px 28px 26px; border-radius: 22px; gap: 8px 12px; }
+.root[data-motion="full"] .fragLabel { font-size: 13px; }
+.root[data-motion="full"] .fragValue { font-size: 38px; }
+.root[data-motion="full"] .frag_alert .fragValue { font-size: 30px; }
+.root[data-motion="full"] .fragNote { font-size: 17px; }
+.root[data-motion="full"] .zenCard { padding: 26px 30px; border-radius: 26px; gap: 16px; align-items: center; }
+.root[data-motion="full"] .frag { align-content: center; }
+.root[data-motion="full"] .zenCard p { font-size: 26px; line-height: 1.32; font-weight: 700; letter-spacing: -0.01em; }
+.root[data-motion="full"] .zenCard span:not(.zenDot) { font-size: 15px; margin-top: 10px; }
+.root[data-motion="full"] .zenCard .sparkle { width: 28px; height: 28px; }
+.cPips { display: none; }
+.root[data-motion="full"] .cPips { display: flex; justify-content: center; gap: 10px; margin-top: 28px; }
+.cPips i { width: 28px; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.16); }
+.cPips i b { display: block; height: 100%; border-radius: inherit; background: var(--ink); transform: scaleX(0); transform-origin: 0 50%; }
+.root[data-motion="full"] .cFoot { margin: 22px auto 0 !important; text-align: center; }
 
 /* ---------- The film ---------- */
 .film { position: relative; background: #04060d; overflow: hidden; }
@@ -292,20 +309,20 @@
 .root[data-motion="full"] .filmStage { height: 100vh; min-height: 640px; padding: 0; display: block; }
 .root[data-motion="full"] .filmHead { position: absolute; left: 0; right: 0; top: 11vh; margin: 0 auto; padding: 0 24px; }
 .root[data-motion="full"] .filmCam {
-  --fw: calc(100vw + 120px);
-  position: absolute; left: 50%; top: 50%; width: var(--fw); max-width: none;
+  --fw: min(100vw - 64px, (100vh - 170px) * 16 / 9);
+  position: absolute; left: 50%; top: calc(50% + 10px); width: var(--fw); max-width: none;
   margin-left: calc(var(--fw) / -2); margin-top: calc(var(--fw) * 9 / 32 * -1);
   transform-origin: 50% 50%; will-change: transform;
 }
-.root[data-motion="full"] .filmVideo { border-radius: 52px; }
-.root[data-motion="full"] .filmBezel { inset: -26px; border-radius: 76px; border-width: 6px; }
-.root[data-motion="full"] .bar { display: block; position: absolute; left: 0; right: 0; height: 7vh; z-index: 4; background: #020308; transform: scaleY(0); }
+.root[data-motion="full"] .filmVideo { border-radius: 28px; }
+.root[data-motion="full"] .filmBezel { inset: -22px; border-radius: 50px; border-width: 5px; }
+.root[data-motion="full"] .bar { display: block; position: absolute; left: 0; right: 0; height: 60px; z-index: 4; background: #020308; transform: scaleY(0); }
 .root[data-motion="full"] .barTop { top: 0; transform-origin: 50% 0; }
 .root[data-motion="full"] .barBottom { bottom: 0; transform-origin: 50% 100%; }
-.root[data-motion="full"] .filmCaption { position: absolute; left: 0; right: 0; bottom: 2.2vh; margin: 0 auto; font-size: 14px; color: #a9b2d6; padding: 0 24px; }
+.root[data-motion="full"] .filmCaption { position: absolute; left: 0; right: 0; bottom: 22px; margin: 0 auto; font-size: 15px; max-width: none; color: var(--soft); padding: 0 24px; }
 
 /* ---------- Promises ---------- */
-.promises { padding: 104px 0 72px; background: linear-gradient(180deg, #04060d, var(--navy) 140px, var(--navy-2)); }
+.promises { padding: 88px 0 72px; background: linear-gradient(180deg, #04060d, var(--navy) 140px, var(--navy-2)); }
 .pGrid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; }
 .pCard {
   grid-column: span 2; position: relative; overflow: hidden; border-radius: 28px; border: 1px solid var(--edge);
@@ -344,7 +361,7 @@
   background: linear-gradient(180deg, var(--navy-2), rgba(11, 21, 51, 0.55) 30%, rgba(11, 21, 51, 0.45) 70%, var(--navy));
 }
 .lessGrid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; }
-.lessGrid > div:first-child { padding-bottom: 104px; }
+.lessGrid > div:first-child { padding-bottom: 64px; }
 .lessList { margin-top: 40px !important; display: grid; gap: 14px; }
 .lessList li {
   display: grid; grid-template-columns: 76px 1fr; gap: 18px; padding: 22px 24px 22px 20px; border-radius: 24px;
@@ -356,7 +373,7 @@
 .lessList p { color: var(--soft); font-size: 15.5px; line-height: 1.5; margin-top: 4px !important; }
 .tapCrop { margin-top: 14px; border-radius: 14px; overflow: hidden; aspect-ratio: 660 / 112; position: relative; border: 1px solid var(--edge); max-width: 420px; }
 .tapCrop img { position: absolute; left: 0; top: 0; width: 100%; transform: translateY(-14.6%); }
-.lessStage { position: relative; min-height: 700px; }
+.lessStage { position: relative; min-height: 640px; }
 .lessFrontRig, .lessBackRig { position: absolute; }
 .lessFrontRig { left: 4%; top: 60px; z-index: 2; }
 .lessBackRig { left: 50%; top: 0; z-index: 1; }
@@ -364,7 +381,7 @@
 .lessBack { --w: 300px; transform: rotate(5deg); filter: brightness(0.82); }
 
 /* ---------- Kai ---------- */
-.kai { padding: 96px 0 88px; background: linear-gradient(180deg, var(--navy), #120f35); }
+.kai { padding: 72px 0 88px; background: linear-gradient(180deg, var(--navy), #120f35); }
 .kaiGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
 .wont { margin-top: 34px !important; display: grid; gap: 0; border-top: 1px solid var(--edge); }
 .wont li { padding: 16px 0; border-bottom: 1px solid var(--edge); color: var(--soft); font-size: 16px; }
@@ -427,7 +444,7 @@
 .faqList details p { color: var(--soft); font-size: 17px; padding: 0 44px 24px 0; max-width: 64ch; }
 
 /* ---------- Closing: tomorrow's sunrise ---------- */
-.closing { position: relative; min-height: 112vh; overflow: hidden; padding: 16vh 0 30vh; }
+.closing { position: relative; min-height: 100vh; overflow: hidden; padding: 16vh 0 20vh; }
 .closeLayer { --anchor: 50%; --lift: -0.5; }
 .sun {
   position: absolute; left: 51.9%; top: 48.7%; width: 52%; aspect-ratio: 1; margin: -26% 0 0 -26%; border-radius: 50%;
@@ -497,7 +514,7 @@
   .nav { padding: 10px 16px; gap: 12px; }
   .navLinks { display: none; }
   .brand { margin-right: auto; }
-  .h1 { font-size: clamp(44px, 12vw, 62px); }
+  .h1 { font-size: clamp(38px, 10.4vw, 62px); }
   .h2 { font-size: clamp(31px, 8.4vw, 44px); }
   .eyebrow { font-size: 16px; margin-bottom: 16px !important; }
   .sub { font-size: 17px; }
@@ -512,7 +529,7 @@
   .heroCopy { padding: 0; }
   .heroPromises { margin-top: 28px !important; gap: 8px; }
   .heroPromises li { font-size: 14px; }
-  .heroStage { min-height: 560px; margin-top: 40px; perspective: 1100px; }
+  .heroStage { min-height: 520px; margin-top: 40px; perspective: 1100px; }
   .heroRig { left: calc(50% - 150px); top: 0; }
   .heroBackRig { left: calc(50% + 20px); top: 70px; }
   .heroFront { --w: 250px; }
@@ -524,7 +541,7 @@
   .head { grid-template-columns: 1fr; margin-bottom: 32px; }
   .head .sub, .textLink { justify-self: start; }
 
-  .cStage { padding-top: 80px; padding-bottom: 72px; }
+  .cStage { padding-top: 56px; padding-bottom: 72px; }
   .cGrid { grid-template-columns: 1fr; gap: 26px; }
   .slot { grid-template-columns: 1fr; }
   .zenCard { padding: 14px 16px; gap: 12px; }

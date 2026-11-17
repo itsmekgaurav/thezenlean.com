@@ -277,6 +277,11 @@ export default function VariationF() {
                 </li>
               ))}
             </ol>
+            <div className={s.cPips} aria-hidden="true">
+              {PAIRS.map((p) => (
+                <i key={p.moment}><b data-f="c-pip" /></i>
+              ))}
+            </div>
             <p className={s.cFoot}>
               The grey lines are a composite of language common across tracking apps, drawn for this page, with
               the &minus;700 kcal target quoted from the study. Zen Lean&rsquo;s lines are quoted word for word

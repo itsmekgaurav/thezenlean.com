@@ -104,31 +104,47 @@ export default function Cinema({ rootId }: { rootId: string }) {
           const cells = all("c-cell", contrast);
           const cold = one("c-cold");
           const dawn = one("c-dawn");
+          // Opacity and transform only. The first cut animated blur filters on twelve cards over a
+          // scrubbed sky and stuttered on a real trackpad (the owner, 17 Nov).
           const dissolve = (tl: gsap.core.Timeline, cell: HTMLElement, at: number) => {
             const usual = cell.querySelector('[data-f="c-usual"]');
             const zen = cell.querySelector('[data-f="c-zen"]');
             const dot = cell.querySelector('[data-f="c-dot"]');
-            tl.to(usual, { opacity: 0, y: 26, scale: 0.97, filter: "grayscale(1) blur(10px)", duration: 0.6, ease: "power2.in" }, at)
-              .fromTo(zen, { opacity: 0, y: 34, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.7, ease: "power3.out" }, at + 0.38)
-              .fromTo(dot, { opacity: 0.25, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, at + 0.4);
+            tl.to(usual, { opacity: 0, y: 22, scale: 0.97, duration: 0.5, ease: "power2.in" }, at)
+              .fromTo(zen, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, at + 0.32)
+              .fromTo(dot, { opacity: 0.25, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, at + 0.34);
           };
           if (desktop) {
+            // One moment at a time: it arrives, the usual line gives way to Zen Lean's, it holds, it leaves.
+            const pips = all("c-pip", contrast);
+            const step = 2.2;
             const tl = gsap.timeline({
-              scrollTrigger: { trigger: contrast, start: "top top", end: () => `+=${Math.round(vh() * 2.6)}`, pin: true, scrub: 0.9, invalidateOnRefresh: true },
+              defaults: { ease: "none" },
+              scrollTrigger: { trigger: contrast, start: "top top", end: () => `+=${Math.round(vh() * 0.75 * cells.length)}`, pin: true, scrub: 0.6, invalidateOnRefresh: true },
             });
-            tl.to({}, { duration: 0.5 }, 0);
-            cells.forEach((c, i) => dissolve(tl, c, 0.5 + i * 0.95));
-            const end = 0.5 + cells.length * 0.95 + 0.4;
-            tl.fromTo(cold, { opacity: 0.93 }, { opacity: 0, ease: "power1.inOut", duration: end - 0.6 }, 0.3)
-              .fromTo(dawn, { opacity: 0.25 }, { opacity: 1, ease: "none", duration: end - 0.3 }, 0.3)
-              .to(one("c-ridges"), { yPercent: 2, scale: 1.04, ease: "none", duration: end }, 0)
+            gsap.set(cells.slice(1), { opacity: 0, y: 40 });
+            cells.forEach((c, i) => {
+              const t = i * step;
+              if (i > 0) tl.to(c, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, t);
+              dissolve(tl, c, t + 0.45);
+              if (pips[i]) tl.to(pips[i], { scaleX: 1, duration: step - 0.2 }, t);
+              if (i < cells.length - 1) tl.to(c, { opacity: 0, y: -40, duration: 0.4, ease: "power2.in" }, t + step - 0.4);
+            });
+            const end = cells.length * step;
+            tl.fromTo(cold, { opacity: 0.93 }, { opacity: 0, ease: "power1.inOut", duration: end * 0.8 }, 0)
+              .fromTo(dawn, { opacity: 0.25 }, { opacity: 1, duration: end }, 0)
+              .to(one("c-ridges"), { yPercent: 2, scale: 1.04, duration: end }, 0)
               .to({}, { duration: 0.6 }, end);
           } else {
             gsap.fromTo(cold, { opacity: 0.93 }, { opacity: 0.1, ease: "none", scrollTrigger: { trigger: contrast, start: "top 60%", end: "bottom bottom", scrub: 0.5 } });
             gsap.fromTo(dawn, { opacity: 0.25 }, { opacity: 1, ease: "none", scrollTrigger: { trigger: contrast, start: "top 60%", end: "bottom bottom", scrub: 0.5 } });
+            // Phone: the two lines stay stacked, never overlapping. The usual line fades back as you reach
+            // it and Zen Lean's rises beneath it (overlapping text mid-dissolve was unreadable at 390px).
             cells.forEach((c) => {
-              const tl = gsap.timeline({ scrollTrigger: { trigger: c, start: "top 78%", end: "top 32%", scrub: 0.5 } });
-              dissolve(tl, c, 0);
+              const tl = gsap.timeline({ scrollTrigger: { trigger: c, start: "top 80%", end: "top 40%", scrub: 0.5 } });
+              tl.to(c.querySelector('[data-f="c-usual"]'), { opacity: 0.4, duration: 1 }, 0)
+                .fromTo(c.querySelector('[data-f="c-zen"]'), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 1, ease: "power2.out" }, 0.2)
+                .fromTo(c.querySelector('[data-f="c-dot"]'), { opacity: 0.25 }, { opacity: 1, duration: 0.6 }, 0.4);
             });
           }
         }
@@ -143,7 +159,7 @@ export default function Cinema({ rootId }: { rootId: string }) {
               scrollTrigger: { trigger: film, start: "top top", end: () => `+=${Math.round(vh() * 1.5)}`, pin: true, scrub: 1, invalidateOnRefresh: true },
             });
             tl.fromTo(cam, { scale: startScale, rotationX: 14, rotation: -1.5, yPercent: 9 }, { scale: 1, rotationX: 0, rotation: 0, yPercent: 0, ease: "power2.inOut", duration: 1 }, 0)
-              .fromTo(one("film-head"), { opacity: 1, y: 0 }, { opacity: 0, y: -40, ease: "power1.in", duration: 0.3 }, 0.08)
+              .fromTo(one("film-head"), { opacity: 1, y: 0 }, { opacity: 0, y: -60, ease: "power1.in", duration: 0.22 }, 0.02)
               .fromTo(one("film-bezel"), { opacity: 1 }, { opacity: 0, ease: "none", duration: 0.3 }, 0.6)
               .fromTo(all("film-bar"), { scaleY: 0 }, { scaleY: 1, ease: "power2.out", duration: 0.25 }, 0.78)
               .fromTo(one("film-caption"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, ease: "power2.out", duration: 0.25 }, 0.9)
@@ -205,11 +221,9 @@ export default function Cinema({ rootId }: { rootId: string }) {
           gsap.from(all("kai-line", panel), {
             opacity: 0,
             y: 18,
-            filter: "blur(6px)",
             duration: 0.45,
             stagger: 0.14,
             ease: "power3.out",
-            clearProps: "filter",
             scrollTrigger: { trigger: panel, start: "top 72%", once: true },
           });
         }
@@ -226,8 +240,8 @@ export default function Cinema({ rootId }: { rootId: string }) {
             .fromTo(one("z-ridges"), { yPercent: -3 }, { yPercent: 1.5 }, 0)
             .fromTo(one("z-mist"), { yPercent: -2, opacity: 0.9 }, { yPercent: 3, opacity: 0.6 }, 0)
             .fromTo(one("z-trees"), { yPercent: -8 }, { yPercent: 6 }, 0)
-            .fromTo(all("z-line"), { opacity: 0, y: 46, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", ease: "power3.out", duration: 0.4, stagger: 0.12 }, 0.25)
-            .fromTo(all("z-after"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, ease: "power3.out", duration: 0.3, stagger: 0.08 }, 0.55);
+            .fromTo(all("z-line"), { opacity: 0, y: 46 }, { opacity: 1, y: 0, ease: "power3.out", duration: 0.28, stagger: 0.07 }, 0.12)
+            .fromTo(all("z-after"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, ease: "power3.out", duration: 0.2, stagger: 0.05 }, 0.32);
         }
 
         ScrollTrigger.refresh();
