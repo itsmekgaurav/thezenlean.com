@@ -11,3 +11,5 @@ Marketing site for Zen Lean, and the home of its email images (`public/email/`).
   we do not make). No prices or trial length on the page: those live in App Store Connect.
 - `public/email/zen-lean-header-v1.jpg` is used by the sign-in emails. Never rename or delete a
   versioned email asset: emails already sent keep pointing at it. Add `-v2` instead.
+- `public/email/welcome-{meal,fast,week,kai}-v1.jpg` are the four pictures in the welcome email. They are
+  generated in the app repo by `supabase/email-templates/images/make_welcome_art.py`; same rule, never rename.
