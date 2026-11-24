@@ -312,7 +312,7 @@ export default function VariationF() {
                 <h3 id="photo-title" className={s.chTitle}>Snap your plate. See what is on it.</h3>
                 <p className={s.chLede}>
                   Point your camera at a meal and Zen Lean estimates calories, protein, carbs, fat and fibre, usually in
-                  a few seconds. Then it asks how much you had, so the number fits your portion.
+                  a few seconds, and logs the meal. Nothing to fill in first. You can change any ingredient afterwards.
                 </p>
                 <ol className={s.steps}>
                   {PHOTO_STEPS.map((st) => (
@@ -335,12 +335,12 @@ export default function VariationF() {
                 </div>
               </div>
               <div className={s.chapterReel} data-f="ch-reel">
-                <Reel film="photo" alt="Zen Lean photo meal: a photo of two oatmeal bowls, the question How much is this? with portion options, Estimating the portion, the result Oatmeal bowl with banana and cacao nibs at 380 kcal, and the day's budget updating to 1,404 kcal left." />
+                <Reel film="photo" alt="Zen Lean photo meal: a photo of two oatmeal bowls is read, then the result appears, Oatmeal bowl with banana and cacao nibs, 380 kcal, and the day's totals update." />
               </div>
             </div>
             <div className={s.wrap}>
               <div className={s.otherWays}>
-                <p className={s.otherHead}>No photo? Two other ways in.</p>
+                <p className={s.otherHead}>No photo? Say it or type it.</p>
                 {OTHER_WAYS.map((o) => (
                   <div key={o.film} className={s.otherCard} data-f="ch-other">
                     <Reel film={o.film} alt={o.alt} className={s.reelSm} />

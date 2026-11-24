@@ -397,6 +397,8 @@
 .otherCard h4 { font-size: 22px; font-weight: 800; letter-spacing: -0.015em; margin: 0; }
 .otherCard p, .smallCard p:not(.chKicker) { color: var(--soft); font-size: 16px; line-height: 1.5; margin-top: 6px !important; }
 .otherFine { grid-column: 1 / -1; color: var(--faint); font-size: 14px; }
+/* One way left since barcode scanning was removed (app 1.2.7): the card takes the full row. */
+.otherWays > div:only-of-type { grid-column: 1 / -1; }
 
 .smallGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 0 64px; scroll-margin-top: 112px; }
 .smallCard .reelSm { width: 150px; }

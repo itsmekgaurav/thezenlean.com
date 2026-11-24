@@ -13,3 +13,5 @@ Marketing site for Zen Lean, and the home of its email images (`public/email/`).
   versioned email asset: emails already sent keep pointing at it. Add `-v2` instead.
 - `public/email/welcome-{meal,fast,week,kai}-v1.jpg` are the four pictures in the welcome email. They are
   generated in the app repo by `supabase/email-templates/images/make_welcome_art.py`; same rule, never rename.
+- `public/film/features/photo.mp4` was re-cut on 24 Nov 2026 to drop the "How much is this?" step, which app
+  1.2.7 removed. It still shows the older look of the analysis and result screens and should be re-shot.

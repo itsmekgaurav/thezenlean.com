@@ -175,7 +175,7 @@ export const FAQ = [
   },
   {
     q: "How does AI photo calorie counting work?",
-    a: "Take a photo of your meal. Zen Lean estimates calories, protein, carbs, fat and fibre, and you check and adjust them before saving. You get ten photo analyses a day.",
+    a: "Take a photo of your meal. Zen Lean estimates calories, protein, carbs, fat and fibre, and logs it. You can change any ingredient afterwards. You get ten photo analyses a day.",
   },
   {
     q: "Does Zen Lean work with Apple Watch?",
@@ -305,8 +305,8 @@ export const FEATURES: Feature[] = [
 
 export const PHOTO_STEPS = [
   { n: "1", b: "Snap it.", t: "Open the camera, or pick a photo already on your phone." },
-  { n: "2", b: "Say how much.", t: "“How much is this?” Tap a portion or slide the weight. A photo alone cannot tell a small bowl from a big one." },
-  { n: "3", b: "Check and save.", t: "Every number is yours to adjust before it counts. Then your day updates itself." },
+  { n: "2", b: "It is logged.", t: "No form to fill in. You see the calories with a likely range, and every ingredient that was counted." },
+  { n: "3", b: "Change anything.", t: "Tap an ingredient to set its grams, or a spoon, cup or piece. The numbers update at once, and so does your day." },
 ];
 
 export const PHOTO_MACROS = [
@@ -318,8 +318,7 @@ export const PHOTO_MACROS = [
 ];
 
 export const OTHER_WAYS = [
-  { film: "describe", b: "Describe it.", t: "Type what you ate. No photo, and it does not use one of your ten.", alt: "Typing a meal description into Zen Lean and getting calories and macros back." },
-  { film: "barcode", b: "Scan the barcode.", t: "The label’s own nutrition, looked up for you.", alt: "Scanning a packaged food's barcode in Zen Lean." },
+  { film: "describe", b: "Describe it.", t: "Say it or type it. No photo, and it does not use one of your ten.", alt: "Typing a meal description into Zen Lean and getting calories and macros back." },
 ];
 
 export const SMALL_FEATURES = [
